@@ -14,7 +14,7 @@
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url();?>assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="<?php echo base_url();?>assets/css/simple-sidebar.css" rel="stylesheet">
+    <link href="<?php echo base_url();?>assets/css/admin.css" rel="stylesheet">
     <!-- datatables -->
     <link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <!--date and time picker -->

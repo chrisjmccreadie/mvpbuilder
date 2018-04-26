@@ -14,6 +14,91 @@ class Generic_model extends CI_Model {
 
 	}
 
+	function fetchProduct($product)
+	{
+		//echo $this->config->item('searchtable');
+		$table = $this->config->item('searchtable');
+		//get the fields and check if it has an active and / or archived
+		$active = '';
+		$archived = '';
+		$fields = '*';
+		foreach ($this->db->list_fields($table) as $item)
+		{
+			//note (chris) do we need this additional check as in theroy the can have the name of a archived product?
+			if ($item == "active")
+				$active = "and active = 1";
+			if ($item == "archived")
+				$archived = "and archived = 0";	
+
+			//build the field list and remove and active and archived from it
+			if (($item != 'active') && ($item != 'archived'))
+			{
+				if ($fields == '*')
+					$fields = $item;
+				else
+					$fields = $fields.','.$item;
+			}
+
+
+		}
+		//run the query
+		$query = "select $fields from `$table` where `name` = '$product' $active $archived";
+		$result = $this->runQuery($query);
+		return($result->result());
+
+	}
+
+	function search($search)
+	{
+		//echo $this->config->item('searchtable');
+		$table = $this->config->item('searchtable');
+		//get the fields and check if it has an active and / or archived
+		$active = '';
+		$archived = '';
+		foreach ($this->db->list_fields($tabl) as $item)
+		{
+			if ($item == "active")
+				$active = "and active = 1";
+			if ($item == "archived")
+				$archived = "and archived = 0";			
+		}
+		
+		//build the search paramaters
+		$paramaters = '';
+		foreach ($this->config->item('searchfields') as $field)
+		{
+			if ($paramaters == '')
+				$paramaters = $paramaters." `$field` like '%$search%'";
+			else
+				$paramaters = $paramaters." and `$field` like '%$search%'";
+
+			
+		}
+
+		$fields = '*';
+		foreach ($this->config->item('searchdisplayfields') as $field)
+		{
+			if ($fields == '*')
+				$fields = "`$field`";
+			else
+				$fields = $fields.",`$field`";
+
+			
+		}
+		
+		$query = "select $fields from `$table` where ".$paramaters.$active.$archived;
+		//echo $query;
+		$result = $this->runQuery($query);
+		return($result);
+
+	}
+
+	function generateHash()
+	{
+		$this->load->helper('string');
+		return(random_string('alnum', 16));
+	}
+
 	/*
 		This is a simple logging function it stores a list of informaiton in a table called log.  Extend this as you see fit.
 
@@ -55,7 +140,7 @@ class Generic_model extends CI_Model {
 	}
 
 
-
+	
 	/*
 	START OF SQL PROCESSING
 	*/
@@ -148,11 +233,42 @@ class Generic_model extends CI_Model {
 		return($query);
 	}
 
+	function updateFromValueArray($table,$data,$id = '')
+	{
+		$query = '';
+		//loop through each array element
+		foreach ($data as $key => $value)
+		{
+			//check if it is the first pass as we do not want to add a , if it is not
+			if ($query == '')
+			{
+				$query = "UPDATE `$table` set ";
+				$query = $query." `$key` = '$value'";
+			}
+			else
+				$query = $query." , `$key` = '$value'";
+		}
+		if ($id != '')
+			$query  = $query." where id = '".$id."'";
+		return($query);
+	}
+
 
 	/*
 	END OF SQL PROCESSING
 	*/
 
+
+	//set the session array based on a array of key value pairs
+	function setSession($data)
+	{
+		//print_r($data);
+		foreach ($data as $key => $value)
+		{
+
+			$this->session->$key = $value;
+		}
+	}
 
 	/*
 	START OF TIME PROCESSING
@@ -208,22 +324,14 @@ class Generic_model extends CI_Model {
 	{
 		
 		$this->load->library('email');
-		$this->email->initialize(array(
-		  'protocol' => 'smtp',
-		  'smtp_host' => 'smtp.sendgrid.net',
-		  'smtp_user' => 'ClickHereMedia',
-		  'smtp_pass' => '=6LY6BTNvRelTdi',
-		  'smtp_port' => 587,
-		  'crlf' => "\r\n",
-		  'newline' => "\r\n"
-		));
+		$this->email->initialize($this->config->item('sendgridsettings'));
 
 		$this->email->from($from, $fromname);
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($content);
 		$this->email->send();
-		echo "Emailed :".$to."<br>";
+		//echo "Emailed :".$to."<br>";
 	}
 
 }

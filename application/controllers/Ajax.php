@@ -41,15 +41,21 @@ class Ajax extends CI_Controller {
         if ($archiveit == 1)
         {
         	//update it
-        	$query = "UPDATE `bonushunt` SET `archived` = '1' WHERE `id` = $id";
+        	$query = "UPDATE `$table` SET `archived` = '1' WHERE `id` = $id";
         }
         else
         {
         	//delete it
-        	$query = "DELETE FROM `bonushunt` WHERE `id` = $id";
+        	$query = "DELETE FROM `$table` WHERE `id` = $id";
         }
         $result = $this->generic_model->runQuery($query);
-		echo $id;
+        //todo (chris) make the udpate in admin.js show error if it as a 0 returned
+        $error = $this->db->error();
+        if ($error['message'] != '') 
+            echo 0;
+        else
+			echo $id;
+		
 	}
 
 	/*
@@ -64,27 +70,24 @@ class Ajax extends CI_Controller {
 	{
 		//get the post data
 		$data = $this->input->post();
-		//set the table
+		//get the table
 		$table = $this->input->post('table');
+		//get the id
+		$id = $data['id'];
+		//remove it from the vars
+		unset($data['id']);
 		//remove the table from the array
 		unset($data['table']);
-		//print_r($data);
-		$query = '';
-		//loop through all the fields to build the query
-		foreach ($data as $key => $value)
-		{
-			//check if it is the first pass as we do not want to add a , if it is not
-			if ($query == '')
-			{
-				$query = "UPDATE `$table` set ";
-				$query = $query." `$key` = '$value'";
-			}
-			else
-				$query = $query." , `$key` = '$value'";
-		}
-		$query  = $query." where id = '".$data['id']."'";
+		//create an update
+		$query = $this->generic_model->updateFromValueArray($table,$data,0,$id);
+		//run the query
 		$query = $this->generic_model->runQuery($query);
-		echo "1";
+		//check for sql errors 
+		$error = $this->db->error();
+		if ($error['message'] != '') 
+            echo 0;
+        else
+			echo 1;
 	}
 
 	/*
@@ -103,6 +106,7 @@ class Ajax extends CI_Controller {
 		//set a blak query
 		$query = '';
 		//loop through all the fields to build the query
+		//todo (chris) replace this with a generic query when it is used more than once
 		foreach ($data as $key => $value)
 		{
 			//check if it is the first pass as we do not want to add a , if it is not
@@ -129,11 +133,14 @@ class Ajax extends CI_Controller {
 				$values = $values." , '$value'";
 		}
 		$query = $query.$values.')';
-		//echo $query;
 		//insert the record
-		//todo (chris) check if there is an error
 		$query = $this->generic_model->runQuery($query);
-		echo "1";
+		//make it check for sql errors 
+		$error = $this->db->error();
+		if ($error['message'] != '') 
+            echo 0;
+        else
+			echo 1;
 
 	}
 

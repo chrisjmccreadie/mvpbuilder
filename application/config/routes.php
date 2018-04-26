@@ -49,10 +49,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+
+$route['product/(:any)'] = 'www/product';
+$route['search'] = 'www/search';
+$route['resetpassword/(:any)'] = 'www/resetpassword';
+$route['forgotpassword'] = 'www/forgotpassword';
+$route['logout'] = 'www/logout';
+$route['signup'] = 'www/signup';
+$route['myaccount'] = 'www/myaccount';
+$route['signin'] = 'www/signin';
 $route['start/(:any)'] = 'start';
 $route['admin/table/(:any)/'] = 'admin/table';
 $route['admin/table/(:any)/add'] = 'admin/addrecord';
 $route['admin/table/(:any)/edit/(:any)'] = 'admin/editrecord';
-
-$route['default_controller'] = 'main';
+//set default controller to front end
+$route['default_controller'] = 'www';
 

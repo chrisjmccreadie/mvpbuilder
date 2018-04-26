@@ -215,6 +215,16 @@ function processrecord(updatetype)
 $( document ).ready(function() 
 {
 
+      //start with menu open
+    $("#wrapper").toggleClass("toggled");
+
+    //toggle class open and close the menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+
    
     //initalise the datatable
     //note (chris) if there is no table on this page this may throw an error on some browsers if this is the case then we will have to 

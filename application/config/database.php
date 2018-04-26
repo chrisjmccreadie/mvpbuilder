@@ -73,17 +73,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-//check if we are local or not
-$hostname = 'localhost';
-$username = 'root';
-$password = 'root';
-$database = 'casinodaddy';
-if ($_SERVER['HTTP_HOST'] != "casinodaddy")
+//ge the env var to check if we are on production if so the database details will be held by the server
+$productionCheck = getenv('PRODUCTION');
+
+if ($productionCheck != 1)
 {
+	//it's local so set this to whatver you want.
 	$hostname = 'localhost';
-	$username = 'web';
-	$password = 'Burgerbun308!';
-	$database = 'cryptogame';
+	$username = 'root';
+	$password = 'root';
+	$database = 'casinodaddy';
+}
+else
+{
+	//check if we are local or not
+	$hostname = getenv('HOSTNAME');
+	$username = getenv('USERNAME');
+	$password = getenv('PASSWORD');
+	$database = getenv('DATABASE');
+
 }
 
 

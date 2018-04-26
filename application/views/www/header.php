@@ -9,12 +9,18 @@
     <meta name="author" content="">
 
     <title>Template site</title>
-
-    <!-- Bootstrap core CSS -->
+   <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url();?>assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Bootstrap core CSS -->
+    <link href="<?php echo base_url();?>assets/css/www.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="<?php echo base_url();?>assets/css/simple-sidebar.css" rel="stylesheet">
-
+    <?php
+    	if ($this->config->item('recaptcha') == 1)
+    	{
+    ?>
+   	<script src='https://www.google.com/recaptcha/api.js'></script>
+   	<?php
+   		}
+   	?>
 </head>
 <body>
