@@ -19,6 +19,15 @@ admin
  ☐ add look up tables
    ☐ country look up
    ☐ area code look up
+ ☐ table updates
+   ☐ ajax loading of datatables for larger datasets (config item)
+   ☐ add a proper WYSIWYG editor text areas
+   ☐ add a nice select (with find etc)
+   ☐ add all the SQL variant types datetime etc
+   ☐ add look up table for extra fields required. max / min chars etc
+   ☐ add inline editing
+ ☐ add setup script
+
 
 
 www

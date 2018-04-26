@@ -4,23 +4,9 @@
 
 Admin class
 
-This class handles all the administration for the simple admin system.
+This class handles all the administration for the MVP admin system.
 
-todo 
 
-	Add / Edit tables
-	
-		add a proper WYSIWYG editor text areas
-		add a nice select (with find etc)
-		add all the SQL variant types datetime etc
-		add look up table for extra fields required. max / min chars etc
-		add inline editing
-
-add s3 class
-add memcache class
-add rest methods 
-add setup script
-ajax loading of datatables for larger datasets (config item)
 */
 
 
@@ -41,9 +27,9 @@ class Admin extends CI_Controller {
 	    //check that the session login var is not one and we are not in the login in page
 	    if (($this->session->loggedin != 1) && ($checkloginpage != ''))
 		{
-			//redirect to the login page
 			//print_r($this->session);
 			//exit;
+			//redirect to the login page	
 			redirect('admin');
 			exit;
 		}
@@ -55,10 +41,6 @@ class Admin extends CI_Controller {
 	//main index file this will take us to dashboard or login
 	public function index()
 	{
-		//$this->generic_model->logit(1);
-		//exit;
-		//check we have a sesssion 
-		//$this->generic_model->setSession();
 		//print_r($this->session);
 
 		if ($this->session->loggedin == 1)
@@ -93,13 +75,6 @@ class Admin extends CI_Controller {
 
 	/*
 		This funciton gets a table and renders out the results for administation
-
-		TODO
-
-		add excluded fields
-		add insert / delete and edit options
-		add fontawesome fonts for this
-		auto remove any filed that is autoincrement from the edit part. 
 
 	*/
 	public function table()
