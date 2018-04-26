@@ -1,14 +1,25 @@
 admin
- ☐ add s3 class
-   ☐ add settings to config
- ☐ add memcachier class
+
+
+  ☐ issuperadmin
+    ✔ show them all the tables @done (18-04-26 19:50)
+    ☐ show the config button
+  ☐ navmenu
+    ☐ create menu items from congfig and link them to the controller 
+  ☐ sql meta manager
+  ☐ add s3 class
+  ☐ add settings to config
+  ☐ add memcachier class
    ☐ build it in the RunQuery command
    ☐ add a config option
- ☐ add sueradmin 
- ☐ sql meta manager
+ ✔ add sueradmin @done (18-04-26 19:42)
  ☐ add all input types
  ☐ clean up session code
    ☐  set the fields to fetch in login from the exclude table
+ ☐ add look up tables
+   ☐ country look up
+   ☐ area code look up
+
 
 www
   ☐ add ecommerce

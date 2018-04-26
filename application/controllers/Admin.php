@@ -125,7 +125,7 @@ class Admin extends CI_Controller {
 		//loop through the show fields array (found in conifg)
 		foreach ($this->config->item('table_show_fields') as $key => $value) 
 		{
-			//check if the table matches the current tabl
+			//check if the table matches the current table
 			if ($key == $table)
 			{
 				//found table implode the array as these are the fields we want

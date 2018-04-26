@@ -178,10 +178,14 @@ class Ajax extends CI_Controller {
 			$i = 0;
 			foreach ($tables as $item)
 			{
-				//exlcude the ones we do not want to deal with
-				if (in_array($item, $this->config->item('admin_exclude_table_list'))) 
+				//check they are not as super admin
+				if ($this->session->issuperadmin != 1)
 				{
-	    			unset($tables[$i]);
+					//exlcude the ones we do not want to deal with
+					if (in_array($item, $this->config->item('admin_exclude_table_list'))) 
+					{
+		    			unset($tables[$i]);
+					}
 				}
 				$i++;
 				

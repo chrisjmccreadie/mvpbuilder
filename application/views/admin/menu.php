@@ -20,7 +20,6 @@
 		<ul>
 			
 				<?php 
-
 					foreach ($this->session->tables as $item)
 					{
 						echo "<a href='".base_url()."admin/table/$item''>$item</a>";
