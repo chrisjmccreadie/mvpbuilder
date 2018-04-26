@@ -156,23 +156,23 @@ class Ajax extends CI_Controller {
 		$password =$this->input->post('password');
 		$email = $this->input->post('email');
 		//build the jquery
-		$query = "select * from `user` where `email` = '$email' AND `password` = '$password' and archived = 0";
+		//todo (chris) make this remove fields
+		//$fields = implode(",", $this->config->item('admin_session_excludefields'));
+
+		$fields = "`id`, `name`, `email`,`caninsert`, `canedit`, `candelete`, `issuperadmin`, `archived`, `canviewtables`";
+		$query = "select $fields from `user` where `email` = '$email' AND `password` = '$password' and archived = 0";
+		//echo $query;
 		//get the results
 		$query = $this->generic_model->runQuery($query);
 		$result = $query->result();
+
 		//check we found him
 		//echo count($result);
 		if (count($result) > 0)
 		{
 			//set the user session infromation
+			$this->generic_model->setSession($result[0]);
 			$this->session->loggedin = 1;
-			$this->session->caninsert = $result[0]->caninsert;
-			$this->session->candelete = $result[0]->candelete;
-			$this->session->canedit = $result[0]->canedit;
-			$this->session->name = $result[0]->name;
-			$this->session->canviewtables = $result[0]->canviewtables;
-			$this->session->email = $result[0]->email;
-			$this->session->id = $result[0]->id;
 			//get all the tables
 			$tables = $this->db->list_tables();
 			$i = 0;
@@ -193,22 +193,16 @@ class Ajax extends CI_Controller {
 			
 
 		}
+		/*
 		else
 		{
 			//the user is not valid so blank the session
-			//note (chris) we could aslo unset the vars here
-			$this->session->caninsert =0;
-			$this->session->candelete = 0;
-			$this->session->canedit =0;
-			$this->session->name = '';
-			$this->session->email = '';
-			$this->session->canviewtables = 0;
-			$this->session->loggedin = 0;
-			$this->session->tables = '';
-			$this->session->foreigntabledata = '';
-			$this->session->id = '';
+			//note (chris) do we have to call this everytime here?
+			$this->generic_model->clearSession();
+			
 
 		}
+		*/
 		echo $this->session->loggedin ;
 	}
 }

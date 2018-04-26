@@ -257,12 +257,27 @@ class Generic_model extends CI_Model {
 	/*
 	END OF SQL PROCESSING
 	*/
+	function clearSession()
+	{
+		//note (chris) may not be required
+		/*
+		$session = $this->session->all_userdata();
+		foreach ($session as $key => $value)
+		{
+			//echo $key.'<br>';
+			if ($key != '__ci_last_regenerate')
+			{
 
+			}
+		}
+		*/
+		$this->session->sess_destroy();
+
+	}
 
 	//set the session array based on a array of key value pairs
 	function setSession($data)
 	{
-		//print_r($data);
 		foreach ($data as $key => $value)
 		{
 

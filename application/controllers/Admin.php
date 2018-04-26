@@ -42,6 +42,8 @@ class Admin extends CI_Controller {
 	    if (($this->session->loggedin != 1) && ($checkloginpage != ''))
 		{
 			//redirect to the login page
+			//print_r($this->session);
+			//exit;
 			redirect('admin');
 			exit;
 		}
@@ -56,6 +58,9 @@ class Admin extends CI_Controller {
 		//$this->generic_model->logit(1);
 		//exit;
 		//check we have a sesssion 
+		//$this->generic_model->setSession();
+		//print_r($this->session);
+
 		if ($this->session->loggedin == 1)
 		{
 			$this->load->view('admin/dashboard');
@@ -70,6 +75,8 @@ class Admin extends CI_Controller {
 	//the main dashboard for the 
 	public function dashboard()
 	{
+		//print_r($this->session);
+		//exit;
 		$this->load->view('admin/dashboard');
 	}
 
@@ -77,19 +84,9 @@ class Admin extends CI_Controller {
 	//this function handles the logout
 	public function logout()
 	{
+		$this->generic_model->clearSession();
 		//log it
 		$this->generic_model->logIt(2);
-		//reset stuff
-		$this->session->caninsert =0;
-		$this->session->candelete = 0;
-		$this->session->canedit =0;
-		$this->session->name = '';
-		$this->session->email = '';
-		$this->session->canviewtables = 0;
-		$this->session->loggedin = 0;
-		$this->session->tables = '';
-		$this->session->foreigntabledata = '';
-		$this->session->id = '';
 		redirect('admin');
 
 	}

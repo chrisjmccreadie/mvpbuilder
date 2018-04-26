@@ -1,4 +1,60 @@
 
+
+--
+-- Table structure for table `clientuser`
+--
+
+CREATE TABLE `clientuser` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
+  `archived` int(11) NOT NULL DEFAULT '0',
+  `resethash` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `clientuser`
+--
+
+INSERT INTO `clientuser` (`id`, `name`, `email`, `password`, `active`, `archived`, `resethash`) VALUES
+(1, 'client22', 'ssss@client.com', 'client', 1, 0, ''),
+(3, 'sss', 'chris@shoprocket.co.uk', 's', 1, 0, ''),
+(4, 'sss', 'chris@shoprocket.co.uk', 's', 1, 0, ''),
+(5, 'sss', 'chris@shoprocket.co.uk', 's', 1, 0, ''),
+(6, 'Christopher McCreadie', 'chrisaaaaa@shoprocket.co.uk', 'a', 1, 0, ''),
+(7, 'Christopher McCreadie', 'achrisaaaaa@shoprocket.co.uk', 'a', 1, 0, ''),
+(8, 'Christopher McCreadie', 'chrisD@shoprocket.co.uk', 'A', 1, 0, ''),
+(9, 'aaa', 'chrisssssqqwq@shoprocket.co.uk', 'a', 1, 0, ''),
+(10, 'aaa', 'chrissssssqqwq@shoprocket.co.uk', 'a', 1, 0, ''),
+(13, 'aaa', 'cryptoskillz@protonmail.com', 'aaas', 1, 0, ''),
+(14, 'ss', 'sss@ss.com', 'ss', 1, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL,
+  `code` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `command` text NOT NULL,
+  `userid` int(11) NOT NULL,
+  `timelogged` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`id`, `code`, `description`, `command`, `userid`, `timelogged`) VALUES
+(10, 2, 'User logged out', '', 1, 1523951504);
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `user`
 --
@@ -8,19 +64,37 @@ CREATE TABLE `user` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `active` int(11) NOT NULL DEFAULT '1',
+  `caninsert` int(11) NOT NULL DEFAULT '1',
+  `canedit` int(11) DEFAULT '1',
+  `candelete` int(11) NOT NULL DEFAULT '1',
+  `issuperadmin` int(11) NOT NULL DEFAULT '0',
+  `archived` int(11) NOT NULL DEFAULT '0',
+  `canviewtables` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `active`) VALUES
-(1, 'admin', 'admin@admin.com', 'admin', 1);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `active`, `caninsert`, `canedit`, `candelete`, `issuperadmin`, `archived`, `canviewtables`) VALUES
+(1, 'admin', 'admin@admin.com', 'admin', 1, 1, 1, 1, 1, 0, 1)
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `clientuser`
+--
+ALTER TABLE `clientuser`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user`
@@ -33,37 +107,17 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `clientuser`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
-
-
-  CREATE TABLE `log` (
-  `id` int(11) NOT NULL,
-  `code` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `command` text NOT NULL,
-  `userid` int(11) NOT NULL,
-  `timelogged` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `log`
---
-ALTER TABLE `log`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
+ALTER TABLE `clientuser`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
