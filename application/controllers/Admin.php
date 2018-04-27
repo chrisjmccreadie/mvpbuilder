@@ -134,15 +134,20 @@ class Admin extends CI_Controller {
 	public function tableadmin()
 	{
 		//get the table
-		$table = $this->uri->segment(3);
+		$data['table'] = $this->uri->segment(3);
 		//get the fields with modifiers
-		$fields = $this->generic_model->getTableModifiers($table);
+		$data['fields'] = $this->generic_model->getTableModifiers($data['table']);
+		//load the view
+		$this->load->view('admin/tableadmin',$data);
+		//debug
+		/*
 		foreach ($fields as $field)
 		{
 			$fieldoutput = $this->generic_model->buildFormElement($field);
 			echo $fieldoutput;
 			//exit;
 		}
+		*/
 
 	}
 
