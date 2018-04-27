@@ -14,84 +14,8 @@ class Generic_model extends CI_Model {
 
 	}
 
-	function fetchProduct($product)
-	{
-		//echo $this->config->item('searchtable');
-		$table = $this->config->item('searchtable');
-		//get the fields and check if it has an active and / or archived
-		$active = '';
-		$archived = '';
-		$fields = '*';
-		foreach ($this->db->list_fields($table) as $item)
-		{
-			//note (chris) do we need this additional check as in theroy the can have the name of a archived product?
-			if ($item == "active")
-				$active = "and active = 1";
-			if ($item == "archived")
-				$archived = "and archived = 0";	
-
-			//build the field list and remove and active and archived from it
-			if (($item != 'active') && ($item != 'archived'))
-			{
-				if ($fields == '*')
-					$fields = $item;
-				else
-					$fields = $fields.','.$item;
-			}
 
 
-		}
-		//run the query
-		$query = "select $fields from `$table` where `name` = '$product' $active $archived";
-		$result = $this->runQuery($query);
-		return($result->result());
-
-	}
-
-	function search($search)
-	{
-		//echo $this->config->item('searchtable');
-		$table = $this->config->item('searchtable');
-		//get the fields and check if it has an active and / or archived
-		$active = '';
-		$archived = '';
-		foreach ($this->db->list_fields($tabl) as $item)
-		{
-			if ($item == "active")
-				$active = "and active = 1";
-			if ($item == "archived")
-				$archived = "and archived = 0";			
-		}
-		
-		//build the search paramaters
-		$paramaters = '';
-		foreach ($this->config->item('searchfields') as $field)
-		{
-			if ($paramaters == '')
-				$paramaters = $paramaters." `$field` like '%$search%'";
-			else
-				$paramaters = $paramaters." and `$field` like '%$search%'";
-
-			
-		}
-
-		$fields = '*';
-		foreach ($this->config->item('searchdisplayfields') as $field)
-		{
-			if ($fields == '*')
-				$fields = "`$field`";
-			else
-				$fields = $fields.",`$field`";
-
-			
-		}
-		
-		$query = "select $fields from `$table` where ".$paramaters.$active.$archived;
-		//echo $query;
-		$result = $this->runQuery($query);
-		return($result);
-
-	}
 
 	function generateHash()
 	{
@@ -144,6 +68,103 @@ class Generic_model extends CI_Model {
 	/*
 	START OF SQL PROCESSING
 	*/
+
+	/*
+
+		Tthis function fetches a product from the choosed product table.
+
+		the table is set in config item under the item searchtable
+
+	*/
+
+	function fetchProduct($product)
+	{
+		//echo $this->config->item('searchtable');
+		$table = $this->config->item('searchtable');
+		//get the fields and check if it has an active and / or archived
+		$active = '';
+		$archived = '';
+		$fields = '*';
+		foreach ($this->db->list_fields($table) as $item)
+		{
+			//note (chris) do we need this additional check as in theroy the can have the name of a archived product?
+			if ($item == "active")
+				$active = "and active = 1";
+			if ($item == "archived")
+				$archived = "and archived = 0";	
+
+			//build the field list and remove and active and archived from it
+			if (($item != 'active') && ($item != 'archived'))
+			{
+				if ($fields == '*')
+					$fields = $item;
+				else
+					$fields = $fields.','.$item;
+			}
+
+
+		}
+		//run the query
+		$query = "select $fields from `$table` where `name` = '$product' $active $archived";
+		$result = $this->runQuery($query);
+		return($result->result());
+
+	}
+
+
+	/*
+
+		Tthis function preforms a search against the chosen table.
+
+		the table is set in config item under the item searchtable
+
+
+	*/
+
+	function search($search)
+	{
+		//echo $this->config->item('searchtable');
+		$table = $this->config->item('searchtable');
+		//get the fields and check if it has an active and / or archived
+		$active = '';
+		$archived = '';
+		foreach ($this->db->list_fields($tabl) as $item)
+		{
+			if ($item == "active")
+				$active = "and active = 1";
+			if ($item == "archived")
+				$archived = "and archived = 0";			
+		}
+		
+		//build the search paramaters
+		$paramaters = '';
+		foreach ($this->config->item('searchfields') as $field)
+		{
+			if ($paramaters == '')
+				$paramaters = $paramaters." `$field` like '%$search%'";
+			else
+				$paramaters = $paramaters." and `$field` like '%$search%'";
+
+			
+		}
+
+		$fields = '*';
+		foreach ($this->config->item('searchdisplayfields') as $field)
+		{
+			if ($fields == '*')
+				$fields = "`$field`";
+			else
+				$fields = $fields.",`$field`";
+
+			
+		}
+		
+		$query = "select $fields from `$table` where ".$paramaters.$active.$archived;
+		//echo $query;
+		$result = $this->runQuery($query);
+		return($result);
+
+	}
 
 
 	/*
@@ -199,12 +220,165 @@ class Generic_model extends CI_Model {
 		return($dataset);
 	}
 
-	//this function gets the data from the dataset function above
-	//note (chris) may not be required will see when I implement it.
-	function getForeignKeyData($data)
+
+	function buildFormElement($field)
 	{
+		//print_r($field);
+		$required = '';
+		//set template var
+		$template = '';
+		//check the required field
+		if ($field->isrequired  != '')
+			$required = 'required';
+
+		//check the modifiers 
+		if ($field->wysiwyg == 1)
+		{
+			$field->type = 'wysiwyg';
+		}
+
+		//check the type to get the correct template
+		switch ($field->type) 
+		{
+	    	case "varchar":
+	      	 	$template = 'admin/formelements/textfield';
+	       		break;
+	    	case "date":
+	      	 	$template = 'admin/formelements/date';
+	       		break;	
+	    	case "int":
+	      	 	$template = 'admin/formelements/int';
+	       		break;	
+	    	case "text":
+	      	 	$template = 'admin/formelements/text';
+	       		break;	
+	    	case "wysiwyg":
+	      	 	$template = 'admin/formelements/wysiwyg';
+	       		break;	
+	    	case "select":
+	      	 	$template = 'admin/formelements/select';
+	       		break;			       				       				       				       			    
+		}
+		//check its not blank, if it is then it is type we do not deal with yet.
+		if ($template != '')
+		{
+			//build the array to send to the parser
+			$data = array('name'=>$field->name,'type'=>'text','value'=>'',"maxlength"=>$field->max_length,'required'=>$required);
+			$output = $this->parser->parse($template, $data, TRUE);
+			return($output);	
+		}
+		else
+			return('');	
+	}
+
+	function getTableModifiers($table)
+	{
+		//get the modified fields
+		$modifiedfields = $this->db->field_data("tablemodifier");
+		//set a field holdet for the select
+		$fieldselect = '';
+		//set a counter
+		$i = 0;
+		//loop and remove the ones we no longer care about
+		foreach ($modifiedfields as $key => $value)
+		{
+			//check if we want to get rid of it
+			//note (chris) we could move this into config to set these tabled we control so not 100% necessary
+			if (($value->name == "id") || ($value->name == 'field') || ($value->name == 'active') || ($value->name == 'table'))
+			{
+				unset($modifiedfields[$i]);
+			}
+			else
+			{
+				if ($fieldselect == '')
+					$fieldselect = $value->name;
+				else
+					$fieldselect = $fieldselect.','.$value->name;
+			}
+			//increment it
+			$i++;
+		}
+		
+
+		//get the the fields
+		$fields = $this->db->field_data($table);
+		//set a counter
+		$i = 0;
+		//loop around the fileds
+		foreach ($fields as $field)
+		{
+			
+			//check its a field we care about
+			if (($field->name != "archived") && ($field->name != 'id') && ($field->name != 'active'))
+			{	
+				$sql = "select $fieldselect from `tablemodifier` where `table` = '$table' and `field` = '".$field->name."' and `active` = 1";	
+				//denug
+				//echo $sql;		
+				//run the sql
+				$result = $this->runQuery($sql);
+				//check its in the modifier table
+				$ret = '';
+				if ($result->num_rows() != 0)
+				{
+					//get the row
+					$ret = $result->row();
+					//debug
+					//print_r($ret);
+					//loop through the remaining fields and add them
+					//note (chris) this may seem a a little veborse but it means we can extend this table for ever without ever having to
+					//worry about updating this code.
+					foreach ($ret as $key => $value)
+					{
+						//set the field
+						$fields[$i]->$key = $value;
+					} 
+					
+				}
+				else
+				{
+					//we did not find it in the modifier table so just add the fields
+					foreach ($modifiedfields as $key => $value)
+					{
+						//set the name
+						$name = $value->name;
+						//it is not found so we have to chehck the type and set it accordingly they reason we do not have to do this above is because it has a vlaue and
+						//we can infer from that.
+						//note (chris) turned this off until I can test the GUI set to blank as theis will mean it is not being used.
+						/*
+						if ($value->type == 'int')
+							$fields[$i]->$name = 0;
+						else
+							$fields[$i]->$name = '';
+						*/
+						$fields[$i]->$name = '';						
+						
+					} 
+					//$fields[$i]->isrequired = 0;
+				}
+				
+
+			}
+			else
+			{
+				//get rid of it is id,active or archived field
+				unset($fields[$i]);
+			}
+			$i++;
+
+
+		}
+		return($fields);
 
 	}
+
+	//this function gets the data from the dataset function above
+	//note (chris) may not be required will see when I implement it.
+	/*
+	function getForeignKeyData($data)
+	{
+		
+	}
+	*/
 
 	//run a basic sql query
 	function runQuery($sql,$table='',$archived = 0,$limit='')

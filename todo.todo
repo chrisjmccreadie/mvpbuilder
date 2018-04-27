@@ -1,11 +1,11 @@
 admin
 
 
-  ☐ issuperadmin
+  ✔ issuperadmin @done (18-04-27 18:35)
     ✔ show them all the tables @done (18-04-26 19:50)
-    ☐ show the config button
+    ✔ show the config button @done (18-04-27 18:34)
   ☐ navmenu
-    ☐ create menu items from congfig and link them to the controller 
+    ☐ create menu items from config and link them to the controller 
   ☐ sql meta manager
   ☐ add s3 class
   ☐ add settings to config
@@ -24,8 +24,9 @@ admin
    ☐ add a proper WYSIWYG editor text areas
    ☐ add a nice select (with find etc)
    ☐ add all the SQL variant types datetime etc
-   ☐ add look up table for extra fields required. max / min chars etc
+   ✔ add look up table for extra fields required. max / min chars etc @done (18-04-27 18:35)
    ☐ add inline editing
+   ☐ setup the admin page for editing tables modifiers
  ☐ add setup script
 
 

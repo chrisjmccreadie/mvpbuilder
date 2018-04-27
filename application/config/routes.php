@@ -62,6 +62,8 @@ $route['start/(:any)'] = 'start';
 $route['admin/table/(:any)/'] = 'admin/table';
 $route['admin/table/(:any)/add'] = 'admin/addrecord';
 $route['admin/table/(:any)/edit/(:any)'] = 'admin/editrecord';
+$route['admin/table/(:any)/admin'] = 'admin/tableadmin';
+
 //set default controller to front end
 $route['default_controller'] = 'www';
 

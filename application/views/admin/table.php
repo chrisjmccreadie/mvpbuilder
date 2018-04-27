@@ -18,6 +18,15 @@
                 <h1>table <?php echo $table;?></h1>
                 
                 <?php
+                if ($this->session->issuperadmin == 1)
+                {
+                ?>
+                	<button>
+                	<a href="/admin/table/<?php echo $table;?>/admin"><i class="fas fa-cog"></i> Table Admin</a>
+                	</button>
+                <?php
+                }
+			    				
 				//check the user can add records
 				if ($this->session->caninsert == 1)
 				{
@@ -83,7 +92,8 @@
 			            			if ($this->session->canedit == 1)
 			            				echo "<a href=\"/admin/table/$table/edit/$item->id\"><i class=\"fas fa-edit\"></i> </a>";
 			            			if ($this->session->candelete == 1)
-			            			echo "<a href=\"javascript:deletetablerecord($item->id)\"><i class=\"fas fa-trash\"></i> </a>";
+			            				echo "<a href=\"javascript:deletetablerecord($item->id)\"><i class=\"fas fa-trash\"></i> </a>";
+			            			
 			            			echo "</td>";
 			            			echo "</tr>";
 			            		}
