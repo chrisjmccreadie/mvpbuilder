@@ -93,6 +93,7 @@ function deleterecorddone()
 
 function updatetablemetasuccess()
 {
+    console.log(callbackresult);
     if (callbackresult == 1)
         alertMessage(fieldUpdated,1,0); 
     else 
@@ -227,20 +228,49 @@ function processrecord(updatetype)
 $( document ).ready(function() 
 {
 
+    //this function deals with the type drop down.  It has to disbale the lookup drop down if it is not required.
+    //note (chris) we blank the select when we disbale it, it may prove poor ux and if this is the case will then change
+    $(".htmltyleclass").change(function ()
+    {
+        //get the value
+        var selectedvalue = $(this).val();
+        //get the dataif
+        var dataid = $(this).attr('data-id');
+        //check if they have selected lookup
+        if (selectedvalue != 'lookup')
+        {
+            //disable the look up drop down
+             $('#lookup'+dataid).prop('disabled', 'disabled');
+             //reset the look up dropdown (see note on UX above)
+             $('#lookup'+dataid+' option:first').attr('selected','selected');
+
+        }
+        else
+        {
+            //renable the look up
+            $('#lookup'+dataid).prop('disabled', false);
+        }
+        
+    });
+
+    //this function checks and uncheks the required box
+    //note (chris) you can set the actual checked box to selected by pasing an attr of checked. But is barely used I prefer to just set the value to 1 or 0 and check for this on the input
     $(".requiredcheck").change(function () 
     { 
-
+        //check if it is checked
         if($(this).is(':checked'))
         {
-           
+            //set it to checked
             $(this).val(1);
         }
         else
         {
+            //set it to uncehced
              $(this).val(0);
         }
     });
 
+    //this function calls the ajax function that saves the meta data
     $(".savetablemeta").click(function(e) 
     {   
         //get the table
@@ -251,14 +281,18 @@ $( document ).ready(function()
         var htmltype = $('#htmltype'+field).val();
         //get if it is required
         var required = $('#required'+field).val();
-        var data = "{table:"+table+",field:"+field+",type:"+htmltype+",required:"+required+"}";
-        //console.log(data);
+        //get the lookup
+        var lookup = $('#lookup'+field).val();
+        //note (chris) this does not work so the code is in line 262 for now
+        //var data = "{table:"+table+",lookup:"+lookup+",field:"+field+",type:"+htmltype+",required:"+required+"}";
+
         //build the url
         var url = rootUrl+'/ajax/updatetablemeta';
-        postAjax(url, {table:table,field:field,type:htmltype,required:required},'updatetablemetasuccess()');
+        postAjax(url, {table:table,field:field,type:htmltype,required:required,lookup:lookup},'updatetablemetasuccess()');
 
     });
-      //start with menu open
+    
+    //start with menu open
     $("#wrapper").toggleClass("toggled");
 
     //toggle class open and close the menu

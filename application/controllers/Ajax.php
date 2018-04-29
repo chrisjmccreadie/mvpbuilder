@@ -19,9 +19,11 @@ class Ajax extends CI_Controller {
 	public function updatetablemeta()
 	{
 		$data = $this->input->post();
+		//print_r($data);
 		$table = $data['table'];
 		$field = $data['field'];
 		$type = $data['type'];
+		$lookup = $data['lookup'];
 		$required = $data['required'];
 		$sql = "select * from `tablemodifier` where `table` = '$table' and `field` = '$field' and active = 1";
 		$result = $this->generic_model->runQuery($sql);
@@ -29,12 +31,12 @@ class Ajax extends CI_Controller {
 		if ($result->num_rows() == 0)
 		{
 			//insert
-			$sql = "INSERT INTO `tablemodifier` (`table`, `field`, `htmltype`, `active`, `required`) VALUES ( '$table', '$field', '$type', '1', '$required')";
+			$sql = "INSERT INTO `tablemodifier` (`table`, `field`,`lookup`, `htmltype`, `active`, `required`) VALUES ( '$table', '$field','$lookup', '$type', '1', '$required')";
 			$res = $this->generic_model->runQuery($sql);
 		}
 		else
 		{
-			$sql = "UPDATE `tablemodifier` SET `table` = '$table', `field`='$field',`htmltype`='$type',`required` = '$required' WHERE `table` = '$table' and `field`='$field'";
+			$sql = "UPDATE `tablemodifier` SET `table` = '$table', `field`='$field',`lookup`='$lookup',`htmltype`='$type',`required` = '$required' WHERE `table` = '$table' and `field`='$field'";
 			//echo $sql;
 			$res = $this->generic_model->runQuery($sql);
 		}

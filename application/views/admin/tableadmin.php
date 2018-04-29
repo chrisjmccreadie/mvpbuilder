@@ -1,4 +1,5 @@
 <?php
+
 	//note (chris) this whole view may be to clever for it's own good and may have to be recoded for the sake of symentery
   	//load the header
     $this->load->view('admin/header.php');
@@ -32,10 +33,14 @@
 	            				{
 	            					//loop through each item pair
 	            					foreach ($item as $key => $value)
-	            					{
+	            					{	
 	            						//ignore the default from the main table as we do not want to show thiese are headers
 	            						if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype'))
+	            						{
+
 	            							echo "<th>$key</th>";
+
+	            						}
 
 	            					}
 	            					echo "<th>Action</th>";
@@ -50,9 +55,9 @@
 			           	
 	            	<?php
 	            		//build some dropdowns arrays to create the meta look up tables
-
+	            		//note (chris) this does not really belon in the render view move this to the generic class of config at some point
 	            		//int dropdown
-	            		$intselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown");
+	            		$intselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown","Lookup"=>"lookup");
 	            		//date dropdown
 	            		$dateselect = array("Date"=>"Date");
 	            		//varchar dropdown
@@ -104,65 +109,84 @@
 	            			{
 	            				//print_r($item);
 
-	            				//ignore the default from the main table as we do not want to show thiese are headers
-	            				if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype'))
-	            				{
-	            					echo "<td>";
-            						if ($i == 1)
-            						{
-            							//set the required field to the item type
-            							$requiredselect = $item->type;
-            							//check for it being and default to the type form the table and not the meta
-            							if ($item->htmltype != '')
-            							{
-            								//set it the data we have in the meta table
-            								$requiredselect = $item->htmltype;
-            								
-            							}
-            							//check if it's an in from the master table and if so set the type to textfield
-            							//note (chris) not sure if I like this one one bit we may be better off setting textfield to vars and into respectivetly.
-            							//			   but this is the element type it is going into so it is tecincally correct.
-            							if ($requiredselect == 'int')
-            							{
-            								$requiredselect = 'textfield';
-            							}
 
-										//outut the field type
-										//note (chris) we may not require this            							
-            							echo "(".$value.")";
-            							//build the type select
-            							echo "<select name='htmltype$item->name' id='htmltype$item->name'>";	
-            							//loop through the option array            							
-            							foreach ($typeselect as $selectkey => $selectvalue)
-            							{
-            								//check if the type matches the paired value and make it the selected field if so.
-            								if ($selectvalue == $requiredselect)
-            									echo "<option value='$selectvalue' selected>$selectkey</option>";
-            								else
-            									echo "<option value='$selectvalue' >$selectkey</option>";
-            							}
-            							echo "</select>";
-            						}
-            						else
-            						{
-            							//check if its required
-            							if ($key == 'required')
-	            						{
+	            				//ignore the default from the main table as we do not want to show thiese are headers
+	            				if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype') ) 
+	            				{
+	            					//check for it being and default to the type form the table and not the meta
+        							if ($item->htmltype != '')
+        							{
+        								//set it the data we have in the meta table
+        								$requiredselect = $item->htmltype;
+        								
+        							}
+	            					echo "<td>";
+	            					//find out what the key is and process accordingly
+	            					//note (chris) we could just render this out as they are found (in fact we did) but this gives us a little more flexibilty 
+	            					//			   and as it is part of the core admin it does not have to be as flexible as other parts such as dealing with devs tables
+	            					//			   as it poits to a core table we will always have complete control thus we can make assumpations in the render view. 
+	            					switch ($key) 
+	            					{
+	            						//check for name
+	            						case "name":
+	            							echo $value;
+	            							break;
+	            						case "type":
+	            							if ($item->htmltype == '')
+	            							{
+	            								$requiredselect = 'textfield';
+	            							}
+	            							else
+	            							{
+	            								$requiredselect = $item->htmltype;
+	            							}
+	            							//note (chris) we may not require this            							
+	            							echo "(".$value.")";
+	            							//build the type select
+	            							echo "<select name='htmltype$item->name' id='htmltype$item->name' class='htmltyleclass' data-id='$item->name'>";	
+	            							//loop through the option array            							
+	            							foreach ($typeselect as $selectkey => $selectvalue)
+	            							{
+	            								//check if the type matches the paired value and make it the selected field if so.
+	            								if ($selectvalue == $requiredselect)
+	            									echo "<option value='$selectvalue' selected>$selectkey</option>";
+	            								else
+	            									echo "<option value='$selectvalue' >$selectkey</option>";
+	            							}
+	            							echo "</select>";
+	            							break;
+	            						case "lookup":
+
+	            							if ($item->htmltype == 'lookup')
+	            								$disableselect = '';
+	            							else
+	            								$disableselect = 'disabled';
+
+	            							echo "<select name='lookup$item->name' id='lookup$item->name' $disableselect>";	
+	            							//loop through the option array   
+	            							echo "<option value='' >Please Select</option>";
+	            							foreach ($alltables as $lookupkey => $lookupvalue)
+	            							{
+	            								if ($value == $lookupvalue)
+	            									echo "<option value='$lookupvalue' selected>$lookupvalue</option>";
+	            								else
+	            									echo "<option value='$lookupvalue' >$lookupvalue</option>";
+
+	            							}
+	            							echo "</select>";
+	            							break;
+	            						case "required":
+	            							
 	            							if ($value == 1)
 	            								echo "<input class='requiredcheck' type='checkbox' id='required$item->name' name='required$item->name' value='$value' checked='checked'>";
 	            							else
 	            								echo "<input  class='requiredcheck' type='checkbox' id='required$item->name' name='required$item->name' value='0' >";
-	            						}
-	            						else
-	            						{
-	            							echo $value; 
-	            						}
-	            						
-            						}
+	            							break;
+	            						default:
+	            							# code...
+	            							break;
+	            					}
 
-
-	            						
-	            					
 	            					echo "</td>";
 	            					$i++;
             					}

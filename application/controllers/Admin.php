@@ -133,6 +133,8 @@ class Admin extends CI_Controller {
 
 	public function tableadmin()
 	{
+		//get all the tables
+		$data['alltables'] = $this->db->list_tables();
 		//get the table
 		$data['table'] = $this->uri->segment(3);
 		//get the fields with modifiers

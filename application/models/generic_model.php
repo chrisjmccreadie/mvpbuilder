@@ -284,7 +284,7 @@ class Generic_model extends CI_Model {
 		{
 			//check if we want to get rid of it
 			//note (chris) we could move this into config to set these tabled we control so not 100% necessary default	primary_key
-			if (($value->name == "id") || ($value->name == 'field') || ($value->name == 'active') || ($value->name == 'table'))
+			if (($value->name == "id") || ($value->name == 'field') || ($value->name == 'active') || ($value->name == 'table') )
 			{
 				unset($modifiedfields[$i]);
 			}
@@ -310,7 +310,9 @@ class Generic_model extends CI_Model {
 		{
 			
 			//check its a field we care about
-			if (($field->name != 'id') && ($field->name != 'active') || ($value->name == 'table'))
+			if (($field->name != 'id') && ($field->name != 'active') && ($field->name != 'archived'))
+			//todo (chris) double check this or statement not sure why we were looking for a value of table 
+			//if (($field->name != 'id') && ($field->name != 'active') && ($field->name != 'archived') || ($value->name == 'table') )
 			{	
 				$sql = "select $fieldselect from `tablemodifier` where `table` = '$table' and `field` = '".$field->name."' and `active` = 1";	
 				//denug

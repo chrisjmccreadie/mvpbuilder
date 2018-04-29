@@ -1,38 +1,49 @@
-admin
+admin:
 
-
-  ✔ issuperadmin @done (18-04-27 18:35)
-    ✔ show them all the tables @done (18-04-26 19:50)
-    ✔ show the config button @done (18-04-27 18:34)
-  ☐ navmenu
+  navmenu:
     ☐ create menu items from config and link them to the controller 
-  ✔ sql meta manager @done (18-04-29 04:42)
-  ☐ add s3 class
-  ☐ add settings to config
-  ☐ add memcachier class
-   ☐ build it in the RunQuery command
-   ☐ add a config option
- ✔ add sueradmin @done (18-04-26 19:42)
- ✔ add all input types @done (18-04-29 04:43)
- ☐ clean up session code
-   ☐  set the fields to fetch in login from the exclude table
- ☐ add look up tables
+    ☐ add s3 class
+    ☐ add settings to config
+  memchace:
+    ☐ add memcachier class
+    ☐ build it in the RunQuery command
+    ☐ add a config option
+ session code:
+   ☐ clean up session code
+     ☐  set the fields to fetch in login from the exclude table
+ table management:
+   ☐ add look up tables
    ☐ country look up
    ☐ area code look up
- ☐ table updates
+   ☐ add look to table admin 
+   ☐ update the table admin ajax
+   ☐ extned the natrual sql rendering code to look in the tablemodifier table first. 
+  table updates:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add a proper WYSIWYG editor text areas
    ☐ add a nice select (with find etc)
    ☐ add all the SQL variant types datetime etc
-   ✔ add look up table for extra fields required. max / min chars etc @done (18-04-27 18:35)
    ☐ add inline editing
-   ✔ setup the admin page for editing tables modifiers @done (18-04-29 04:42)
- ☐ add setup script
- ☐ change ajax at adminajax
+  misc:
+   ☐ add setup script
+   ☐ change ajax to adminajax
 
 
 
-www
+www:
   ☐ add ecommerce
   ☐ clean up session code
   
+
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ store the record in the tablemodifier tabke if there is a na @done (18-04-29 22:46)
+ ✔ add all input types @done (18-04-29 04:43)
+ ✔ sql meta manager @done (18-04-29 04:42)
+ ✔ setup the admin page for editing tables modifiers @done (18-04-29 04:42)
+ ✔ issuperadmin @done (18-04-27 18:35)
+ ✔ add look up table for extra fields required. max / min chars etc @done (18-04-27 18:35)
+ ✔ show the config button @done (18-04-27 18:34)
+ ✔ show them all the tables @done (18-04-26 19:50)
+ ✔ add sueradmin @done (18-04-26 19:42)
