@@ -16,6 +16,39 @@ class Ajax extends CI_Controller {
 		echo "Go away, you";
 	}
 
+	public function updatetablemeta()
+	{
+		$data = $this->input->post();
+		$table = $data['table'];
+		$field = $data['field'];
+		$type = $data['type'];
+		$required = $data['required'];
+		$sql = "select * from `tablemodifier` where `table` = '$table' and `field` = '$field' and active = 1";
+		$result = $this->generic_model->runQuery($sql);
+		//echo $result->num_rows();
+		if ($result->num_rows() == 0)
+		{
+			//insert
+			$sql = "INSERT INTO `tablemodifier` (`table`, `field`, `htmltype`, `active`, `required`) VALUES ( '$table', '$field', '$type', '1', '$required')";
+			$res = $this->generic_model->runQuery($sql);
+		}
+		else
+		{
+			$sql = "UPDATE `tablemodifier` SET `table` = '$table', `field`='$field',`htmltype`='$type',`required` = '$required' WHERE `table` = '$table' and `field`='$field'";
+			//echo $sql;
+			$res = $this->generic_model->runQuery($sql);
+		}
+		$error = $this->db->error();
+        if ($error['message'] != '') 
+            echo 0;
+        else
+			echo 1;
+		//print_r($data);
+		//update it
+        //$query = "UPDATE `$table` SET `archived` = '1' WHERE `id` = $id";
+
+	}
+
 	/*
 
 	Thid function deleted or marks a record as archived (if archived field exists)

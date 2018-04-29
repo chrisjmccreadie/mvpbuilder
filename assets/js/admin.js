@@ -12,6 +12,9 @@ var recordAddedError = "The record was not added";
 var selectDropdownError = "Select from dropdown";
 var recordUpdated = 'The record has been updated';
 var recordUpdatedError = 'The record was not updated';
+var fieldUpdated = 'The field has been updated';
+var fieldUpdatedError = 'The field was not updated';
+
 //set a global call  back
 var callbackresult = '';
 
@@ -85,6 +88,15 @@ function deleterecorddone()
     //var table = $('#admintable').DataTable();
     //table.row('#row'.callbackresult).remove().draw();
     location.reload();
+
+}
+
+function updatetablemetasuccess()
+{
+    if (callbackresult == 1)
+        alertMessage(fieldUpdated,1,0); 
+    else 
+        alertMessage(fieldUpdatedError,1,0); 
 
 }
 
@@ -215,6 +227,37 @@ function processrecord(updatetype)
 $( document ).ready(function() 
 {
 
+    $(".requiredcheck").change(function () 
+    { 
+
+        if($(this).is(':checked'))
+        {
+           
+            $(this).val(1);
+        }
+        else
+        {
+             $(this).val(0);
+        }
+    });
+
+    $(".savetablemeta").click(function(e) 
+    {   
+        //get the table
+        var table = $('#table').val();
+        //get the field
+        var field = $(this).attr('data-id');
+        //get the html type selected
+        var htmltype = $('#htmltype'+field).val();
+        //get if it is required
+        var required = $('#required'+field).val();
+        var data = "{table:"+table+",field:"+field+",type:"+htmltype+",required:"+required+"}";
+        //console.log(data);
+        //build the url
+        var url = rootUrl+'/ajax/updatetablemeta';
+        postAjax(url, {table:table,field:field,type:htmltype,required:required},'updatetablemetasuccess()');
+
+    });
       //start with menu open
     $("#wrapper").toggleClass("toggled");
 

@@ -302,6 +302,7 @@ class Generic_model extends CI_Model {
 
 		//get the the fields
 		$fields = $this->db->field_data($table);
+		//print_r($fields);
 		//set a counter
 		$i = 0;
 		//loop around the fileds
@@ -309,7 +310,7 @@ class Generic_model extends CI_Model {
 		{
 			
 			//check its a field we care about
-			if (($field->name != "archived") && ($field->name != 'id') && ($field->name != 'active') || ($value->name == 'table'))
+			if (($field->name != 'id') && ($field->name != 'active') || ($value->name == 'table'))
 			{	
 				$sql = "select $fieldselect from `tablemodifier` where `table` = '$table' and `field` = '".$field->name."' and `active` = 1";	
 				//denug

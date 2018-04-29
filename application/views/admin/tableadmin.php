@@ -131,7 +131,7 @@
 										//note (chris) we may not require this            							
             							echo "(".$value.")";
             							//build the type select
-            							echo "<select>";	
+            							echo "<select name='htmltype$item->name' id='htmltype$item->name'>";	
             							//loop through the option array            							
             							foreach ($typeselect as $selectkey => $selectvalue)
             							{
@@ -145,17 +145,31 @@
             						}
             						else
             						{
-            							//do nothing with it.
-	            						echo $value; 
+            							//check if its required
+            							if ($key == 'required')
+	            						{
+	            							if ($value == 1)
+	            								echo "<input class='requiredcheck' type='checkbox' id='required$item->name' name='required$item->name' value='$value' checked='checked'>";
+	            							else
+	            								echo "<input  class='requiredcheck' type='checkbox' id='required$item->name' name='required$item->name' value='0' >";
+	            						}
+	            						else
+	            						{
+	            							echo $value; 
+	            						}
+	            						
             						}
+
+
 	            						
 	            					
 	            					echo "</td>";
 	            					$i++;
+            					}
 	            					
-		            			}
+		            			
 							}
-							echo "<td>Update</td>";
+							echo "<td><span class='savetablemeta' data-id='$item->name'><i class='fas fa-save ' ></i></span>";
 							?>
 							
 	            		</tr>
@@ -168,7 +182,8 @@
 			           
 			        </tbody>
 			     </table>
-               
+                              <input type="hidden" class='form-control'  name="table" id='table' value="<?php echo $table;?>">
+
             </div>
         </div>
         <!-- /#page-content-wrapper -->
