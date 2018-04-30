@@ -192,7 +192,6 @@ class Generic_model extends CI_Model {
 		{
     		//check if it is an int and if it is look for a matching table
     		//note (chris) we could extend this to use more than ints but this is how must primary / foreign keys work.
-    		//todo (chris) refactor
     		if (($value->type == "int") || ($value->type == "tinyint"))
     		{
 	    		if (($value->htmltype == "lookup") && ($value->lookup != ''))
@@ -225,9 +224,6 @@ class Generic_model extends CI_Model {
 
 					}
 				}
-
-				
-				
 			}
     		
 		}
@@ -237,54 +233,114 @@ class Generic_model extends CI_Model {
 	}
 
 
-	function buildFormElement($field)
+	function buildFormElement($field,$foreigntabledata = '')
 	{
+		//echo $field->name;
 		//print_r($field);
 		$required = '';
 		//set template var
 		$template = '';
 		//check the required field
-		if ($field->isrequired  != '')
+		if ($field->required  != '')
 			$required = 'required';
 
-		//check the modifiers 
-		if ($field->wysiwyg == 1)
+		//check if its an id field if is return a hidden field
+		if ($field->name == 'id') 
 		{
-			$field->type = 'wysiwyg';
-		}
-
-		//check the type to get the correct template
-		switch ($field->type) 
-		{
-	    	case "varchar":
-	      	 	$template = 'admin/formelements/textfield';
-	       		break;
-	    	case "date":
-	      	 	$template = 'admin/formelements/date';
-	       		break;	
-	    	case "int":
-	      	 	$template = 'admin/formelements/int';
-	       		break;	
-	    	case "text":
-	      	 	$template = 'admin/formelements/text';
-	       		break;	
-	    	case "wysiwyg":
-	      	 	$template = 'admin/formelements/wysiwyg';
-	       		break;	
-	    	case "select":
-	      	 	$template = 'admin/formelements/select';
-	       		break;			       				       				       				       			    
-		}
-		//check its not blank, if it is then it is type we do not deal with yet.
-		if ($template != '')
-		{
-			//build the array to send to the parser
-			$data = array('name'=>$field->name,'type'=>'text','value'=>'',"maxlength"=>$field->max_length,'required'=>$required);
-			$output = $this->parser->parse($template, $data, TRUE);
-			return($output);	
+			if ($field->value != '')
+			{
+				$data = array("value"=>$field->value);
+				$template = 'admin/formelements/hidden';
+				$output = $this->parser->parse($template, $data, TRUE);
+				return($output);
+			}
 		}
 		else
-			return('');	
+		{
+			//$type = $field->type;
+			if ($field->htmltype != '')
+			{
+				$field->type = $field->htmltype ;
+			}
+			//echo "ll";
+			//print_r($field->type);
+			//echo "<br>";
+			//check the type to get the correct template
+			switch ($field->type) 
+			{
+		    	case "lookup":	
+		    		//get the table;
+		    		//print_r($field);
+		    		$sql = "select id,name from `$field->lookup`";
+		    		$result = $this->runQuery($sql);
+		    		//print_r($result->result());
+		    		$field->lookupdata = $result->result();
+		    		$field->htmltype ='select';
+		    		$field->foreigndata = '';
+		      	 	$template = 'admin/formelements/lookup';
+		       		break;				
+		    	case "textfield":	
+		    		//echo "tf";	
+		    		$field->htmltype = 'textfield';    		
+		      	 	$template = 'admin/formelements/textfield';
+		       		break;
+		    	case "date":
+		      	 	$template = 'admin/formelements/date';
+		       		break;	
+		    	case "int":
+		    		$foreigndata = '';
+            		foreach ($foreigntabledata as $item2)
+            		{
+            			foreach ($item2 as $key => $value) 
+            			{
+            				if ($key == $field->name)
+            				{
+            					//print_r($value);
+            					$foreigndata = $value;
+            				}
+            			}
+            			
+            		}
+            		if ($foreigndata == '')
+            		{
+		    			$field->htmltype = 'textfield';
+		    			$template = 'admin/formelements/textfield';
+            		}
+            		else
+            		{
+            			$field->htmltype = 'lookup';
+            			$field->lookupdata = $foreigndata;
+            			$template = 'admin/formelements/lookup';
+            		}
+
+		      	 	
+		       		break;	
+		    	case "text":
+		    		$field->htmltype = 'textfield';
+		      	 	$template = 'admin/formelements/text';
+		       		break;	
+		    	case "wysiwyg":
+		    		//print_r($field);
+		    		$field->htmltype = 'textfield';
+		      	 	$template = 'admin/formelements/wysiwyg';
+		       		break;	
+		    	case "select":
+		    		$field->htmltype = 'select';
+		      	 	$template = 'admin/formelements/select';
+		       		break;			       				       				       				       			    
+			}
+			//check its not blank, if it is then it is type we do not deal with yet.
+			if ($template != '')
+			{
+
+				//build the array to send to the parser
+				$output = $this->parser->parse($template, $field, TRUE);
+				return($output);	
+			}
+			else
+				return('');	
+		}
+		return('');	
 	}
 
 	function getTableModifiers($table)

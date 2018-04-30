@@ -25,13 +25,40 @@
                   <input type="hidden" class='form-control'  name="table" id='table' value="<?php echo $table;?>">
 
  				<?php 
- 					//print_r($fields);
+ 				     //print_r($fields);
  				    //print_r($foreigntabledata);	
  					//print_r($recordresult);
 
                 	foreach ($fields as $item)
                 	{
-
+                        
+                        //echo "<div class='form-group' >";
+                        if ($recordresult == '')
+                        {
+                            $item->value = '';
+                        }
+                        else
+                        {
+                            foreach ($recordresult as $key => $value)
+                            {
+                                if ($key == $item->name)
+                                {
+                                    $item->value = $value;
+                                }
+                            }  
+                        }
+                        //print_r($item);
+                        $fieldoutput = $this->generic_model->buildFormElement($item,$foreigntabledata);
+                        if ($fieldoutput != '')
+                        {
+                            echo "<div class='form-group' >";
+                            echo $fieldoutput; 
+                            echo "</div>";
+                        }
+                        
+                        //echo "</div>";
+                        /*
+                        exit;
                 		//check to see if we have data for the field
                 		$editdata = $item->default;
                 		if ($recordresult != '')
@@ -122,8 +149,9 @@
                 			//echo "<textarea class='form-control' rows='5' name='$item->name' id='$item->name'></textarea>";
 
                 		}
+                        echo "</div>";
+                		*/
                 		
-                		echo "</div>";
 
                 	}
                 ?>
