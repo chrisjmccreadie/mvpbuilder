@@ -45,9 +45,23 @@
 			            <tr>
 			            	<?php
 			            		//loop throuh the fields and output
+			            		//print_r($fields);
+			            		//check this against the field list
+
 			            		foreach ($fields as $field)
 			            		{
-			            			echo " <th>".$field->name."</th>";
+			            			if ($fieldlist == '')
+			            			{
+										echo " <th>".$field->name."</th>";
+			            			}
+			            			else
+			            			{
+			            				if (in_array($field->name, $fieldlist)) 
+			            				{
+										    echo " <th>".$field->name."</th>";
+										}
+			            			}
+			            			
 			            		}
 			            	?>
 			            	<th>Action</th>
@@ -59,13 +73,16 @@
 			           
 			            	<?php
 			            		//loop through data
+			            		//print_r($result);
 			            		foreach ($result as $item)
 			            		{
 
 					            	echo "<tr id='row$item->id'>";
 					            	//loop through each item.
+					            	//print_r($item);
 			            			foreach ($item as $key => $value)
 			            			{
+
 			            				//loop through the foreign data array
 				                		foreach ($foreigntabledata as $item2)
 				                		{
@@ -75,6 +92,7 @@
 				                				//check if the fields match
 				                				if ($key2 == $key)
 				                				{
+
 				                					//loop through the foreign data values
 				                					foreach ($value2 as $item3)
 			            							{

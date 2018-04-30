@@ -180,43 +180,82 @@ class Generic_model extends CI_Model {
 
 	*/
 
-	function getDataSet($table)
+	function getDataSet($table,$fields)
 	{
+		//print_r($fields);
 		//set the results array
 		$dataset = array();
 		//get the fields for the table
-		$fields = $this->db->field_data($table);
+		//$fields = $this->db->field_data($table);
 		//loop around the fields
 		foreach ($fields as $key => $value) 
 		{
     		//check if it is an int and if it is look for a matching table
     		//note (chris) we could extend this to use more than ints but this is how must primary / foreign keys work.
-    		if ($value->type == "int")
+    		//todo (chris) refactor
+    		if (($value->type == "int") || ($value->type == "tinyint"))
     		{
-    			//get the table list.
-    			foreach ($this->session->tables as $item)
-				{
-					//check if the field matched the table name
-					if ($item == $value->name)
-					{
-						//get the data
-						//note (chris) we could further filter here limits, wheres etc.
+	    		if (($value->htmltype == "lookup") && ($value->lookup != ''))
+	    		{
 
-						if ($this->config->item('table_foreignkey_fields') == '')
-							$thefields = '*';
-						else
-							$thefields = $this->config->item('table_foreignkey_fields');
-						$query = "select $thefields from $item";
-						//run the query
-						$result = $this->runQuery($query);
-						//store the result in a key value pair
-						$tmpdata = array($value->name=>$result->result());
-						//add to our dataset/
-						$dataset[] = $tmpdata;
+	    			//todo if there is a look up we have to build it here
+	    			foreach ($this->session->tables as $item)
+					{
+						//echo $item;
+						if ($item == $value->lookup)
+						{
+							if ($this->config->item('table_foreignkey_fields') == '')
+								$thefields = '*';
+							else
+								$thefields = $this->config->item('table_foreignkey_fields');
+							$query = "select $thefields from $item";
+							//echo $query;
+							//run the query
+							$result = $this->runQuery($query);
+							//store the result in a key value pair
+							$tmpdata = array($value->name=>$result->result());
+							//add to our dataset/
+							$dataset[] = $tmpdata;
+
+						}
+					}
+
+				}
+				else
+				{
+					//echo 'in';
+
+					//get the table list.
+	    			foreach ($this->session->tables as $item)
+					{
+						//print_r($item);
+						//echo $value->name.'<br>';
+						//check if the field matched the table name
+						if ($item == $value->name)
+						{
+							//echo 'in 3';
+							//get the data
+							//note (chris) we could further filter here limits, wheres etc.
+
+							if ($this->config->item('table_foreignkey_fields') == '')
+								$thefields = '*';
+							else
+								$thefields = $this->config->item('table_foreignkey_fields');
+							$query = "select $thefields from $item";
+							//echo $query;
+							//run the query
+							$result = $this->runQuery($query);
+							//store the result in a key value pair
+							$tmpdata = array($value->name=>$result->result());
+							//add to our dataset/
+							$dataset[] = $tmpdata;
+						}
 					}
 				}
     		}
 		}
+		//print_r($dataset);
+		//exit;
 		return($dataset);
 	}
 
@@ -284,7 +323,7 @@ class Generic_model extends CI_Model {
 		{
 			//check if we want to get rid of it
 			//note (chris) we could move this into config to set these tabled we control so not 100% necessary default	primary_key
-			if (($value->name == "id") || ($value->name == 'field') || ($value->name == 'active') || ($value->name == 'table') )
+			if ( ($value->name == 'field') || ($value->name == 'active') || ($value->name == 'table') )
 			{
 				unset($modifiedfields[$i]);
 			}
@@ -308,12 +347,12 @@ class Generic_model extends CI_Model {
 		//loop around the fileds
 		foreach ($fields as $field)
 		{
-			
+			//note (chris) should we be removing active etc.
 			//check its a field we care about
-			if (($field->name != 'id') && ($field->name != 'active') && ($field->name != 'archived'))
-			//todo (chris) double check this or statement not sure why we were looking for a value of table 
+			//if (($field->name != 'active') && ($field->name != 'archived'))
 			//if (($field->name != 'id') && ($field->name != 'active') && ($field->name != 'archived') || ($value->name == 'table') )
-			{	
+			//if ($value->name == 'table') 
+			//{	
 				$sql = "select $fieldselect from `tablemodifier` where `table` = '$table' and `field` = '".$field->name."' and `active` = 1";	
 				//denug
 				//echo $sql;		
@@ -360,16 +399,17 @@ class Generic_model extends CI_Model {
 				}
 				
 
-			}
-			else
-			{
+			//}
+			//else
+			//{
 				//get rid of it is id,active or archived field
-				unset($fields[$i]);
-			}
+			//	unset($fields[$i]);
+			//}
 			$i++;
 
 
 		}
+
 		return($fields);
 
 	}

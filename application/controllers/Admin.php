@@ -97,35 +97,44 @@ class Admin extends CI_Controller {
 
 		//set the field list to all fields
 		$fieldlist = '*';
+		$data['fieldlist'] = '';
 		//loop through the show fields array (found in conifg)
 		foreach ($this->config->item('table_show_fields') as $key => $value) 
 		{
+
 			//check if the table matches the current table
 			if ($key == $table)
 			{
 				//found table implode the array as these are the fields we want
 				$fieldlist = implode($value,",");
+				$data['fieldlist'] = $value;
 			}
 		}
 
 		
-
-
+		//echo $fieldlist;
+		//exit;
 		//build the query
 		$query = "select $fieldlist from `$table` ";
+		//echo $query;
 		//get the results
 		$query = $this->generic_model->runQuery($query,$table,1);
+		//remove any archived and active fields
+		//print_r( $query->result());
 		
 
 		//store the table name for the view to process
 		$data['table'] = $table;
 		//store the fields for processing.
-		$data['fields'] =$query->field_data();
+		$data['fields'] = $this->generic_model->getTableModifiers($data['table']);
+
+		//print_r($data['fields']);
+		//exit;
 		//store the results for the view to process.
 		$data['result'] = $query->result();
 		//get the assoicated datasets
-		$data['foreigntabledata'] = $this->generic_model->getDataSet($table);
-
+		
+		$data['foreigntabledata'] = $this->generic_model->getDataSet($table,$data['fields']);
 		//load the view
 		$this->load->view('admin/table',$data);
 
@@ -157,13 +166,15 @@ class Admin extends CI_Controller {
 	public function addrecord()
 	{
 		//get the table
-		$table = $this->uri->segment(3);
-		//store the fields
-		$data['fields'] = $this->db->field_data($table);
-		//store the table name for the view to process
-		$data['table'] = $table;	
+		$data['table'] = $this->uri->segment(3);
+		//get the fields with modifiers
+
+		$data['fields'] = $this->generic_model->getTableModifiers($data['table']);
+		//print_r($data['fields'] );
+
+			
 		//get the assoicated datasets
-		$data['foreigntabledata'] = $this->generic_model->getDataSet($table);
+		$data['foreigntabledata'] = $this->generic_model->getDataSet($data['table'],$data['fields']);
 		//set the result to blank as its add add
 		$data['recordresult'] = '';		
 		//load the view
@@ -186,11 +197,11 @@ class Admin extends CI_Controller {
 		$data['recordresult'] = $result;
 
 		//store the fields
-		$data['fields'] = $this->db->field_data($table);
+		$data['fields'] = $this->generic_model->getTableModifiers($table);
 		//store the table name for the view to process
 		$data['table'] = $table;	
 		//get the assoicated datasets
-		$data['foreigntabledata'] = $this->generic_model->getDataSet($table);
+		$data['foreigntabledata'] = $this->generic_model->getDataSet($table,$data['fields'] );
 		//load the view
 		$this->load->view('admin/addeditrecord',$data);
 

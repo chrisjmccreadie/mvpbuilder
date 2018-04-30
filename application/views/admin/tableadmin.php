@@ -35,7 +35,8 @@
 	            					foreach ($item as $key => $value)
 	            					{	
 	            						//ignore the default from the main table as we do not want to show thiese are headers
-	            						if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype'))
+
+	            						if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype') && ($key != 'id') )
 	            						{
 
 	            							echo "<th>$key</th>";
@@ -107,11 +108,11 @@
 		            		//loop through each item to render out to the table
 	            			foreach ($item as $key => $value)
 	            			{
-	            				//print_r($item);
+	            				
 
 
 	            				//ignore the default from the main table as we do not want to show thiese are headers
-	            				if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype') ) 
+	            				if (($key != 'primary_key') && ($key != 'default') && ($key != 'max_length') && ($key != 'htmltype') && ($key!= 'id') ) 
 	            				{
 	            					//check for it being and default to the type form the table and not the meta
         							if ($item->htmltype != '')
