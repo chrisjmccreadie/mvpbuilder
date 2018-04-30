@@ -15,9 +15,7 @@ admin:
    ☐ add look up tables
    ☐ country look up
    ☐ area code look up
-   ☐ add look to table admin 
-   ☐ update the table admin ajax
-   ☐ extned the natrual sql rendering code to look in the tablemodifier table first. 
+   ☐ extned the natrual sql rendering code to look in the tablemodifier table first.
   table updates:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add a proper WYSIWYG editor text areas
@@ -38,6 +36,8 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ update the table admin ajax @done (18-04-30 00:30) @project(admin / table management)
+ ✔ add look to table admin @done (18-04-30 00:29) @project(admin / table management)
  ✔ store the record in the tablemodifier tabke if there is a na @done (18-04-29 22:46)
  ✔ add all input types @done (18-04-29 04:43)
  ✔ sql meta manager @done (18-04-29 04:42)
