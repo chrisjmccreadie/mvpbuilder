@@ -232,10 +232,19 @@ class Generic_model extends CI_Model {
 		return($dataset);
 	}
 
+	/*
 
+
+	this function builds the correct input type
+
+	todo 
+
+	required
+
+
+	*/
 	function buildFormElement($field,$foreigntabledata = '')
 	{
-		//echo $field->name;
 		//print_r($field);
 		$required = '';
 		//set template var
@@ -247,6 +256,7 @@ class Generic_model extends CI_Model {
 		//check if its an id field if is return a hidden field
 		if ($field->name == 'id') 
 		{
+			//check that we have a value its an edit form so we create a hidden field
 			if ($field->value != '')
 			{
 				$data = array("value"=>$field->value);
