@@ -138,10 +138,16 @@ class Ajax extends CI_Controller {
 		$table = $this->input->post('table');
 		//remove the table from the array
 		unset($data['table']);
-		$imagefilename = $data['imagefilename'];
-		unset($data['imagefilename']);
-		$imagehandlename = $data['imagehandlename'];
-		unset($data['imagehandlename']);
+		$imagefilename =  '';
+		$imagehandlename = '';
+
+		if (isset($data['imagefilename']))
+		{
+			$imagefilename = $data['imagefilename'];
+			unset($data['imagefilename']);
+			$imagehandlename = $data['imagehandlename'];
+			unset($data['imagehandlename']);
+		}
 		//set a blak query
 		$query = '';
 		//loop through all the fields to build the query
