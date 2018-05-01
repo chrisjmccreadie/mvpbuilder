@@ -217,12 +217,16 @@ function processrecord(updatetype)
         //get name 
         var name = $(this).attr("name");
         var required = $(this).attr("data-required");
+        //alert(required);
 
         //check something is selected
         if (required == 1)
         {
+             //alert(name)
+            //alert($( this ).val())
             if ($( this ).val() == '')
             {
+
                 //set the error
                 $('#error'+name).text(fieldBlankError);
                 $('#error'+name).addClass('select_error');
@@ -273,7 +277,12 @@ var elementname = '';
 
         $('#'+elementname).val(response.filesUploaded[0].url);
         $('#imagefile'+elementname).val(response.filesUploaded[0].filename);
+        //$('#'+elementname).text(response.filesUploaded[0].url);
+
         $('#imagehandle'+elementname).val(response.filesUploaded[0].handle);
+
+         $('#error'+elementname).text('');
+        $('#error'+elementname).removeClass('select_error');
 
         //do we want to hide the chooser?
        /// $('#choose'+elementname).text('');
