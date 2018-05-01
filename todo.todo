@@ -23,6 +23,7 @@ admin:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add a nice select (with find etc)
    ☐ add inline editing
+   ☐ reset inputs when added
   misc:
    ☐ add setup script
    ☐ change ajax to adminajax

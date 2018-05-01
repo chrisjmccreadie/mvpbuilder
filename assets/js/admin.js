@@ -274,15 +274,17 @@ var elementname = '';
     fsClient.pick({
       fromSources:["local_file_system","imagesearch","facebook","instagram","dropbox"]
     }).then(function(response) {
-        console.log(elementname);
-        $('#image'+elementname).attr('src','https://process.filestackapi.com/resize=width:400,height:200/'+response.filesUploaded[0].handle);
+       console.log(response);
+        $('#image').attr('src','https://process.filestackapi.com/resize=width:400,height:200/'+response.filesUploaded[0].handle);
         //document.getElementById(name).value = "tinkumaster";
-
-        $('#'+elementname).val(response.filesUploaded[0].url);
-        $('#imagefile'+elementname).val(response.filesUploaded[0].filename);
+         $('#'+elementname).val(response.filesUploaded[0].url);
+        $('#imageurl').val(response.filesUploaded[0].url);
+        $('#imagefile').val(response.filesUploaded[0].filename);
         //$('#'+elementname).text(response.filesUploaded[0].url);
+        $('#imagehandle').val(response.filesUploaded[0].handle);
+        $('#imagelement').val(elementname);
 
-        $('#imagehandle'+elementname).val(response.filesUploaded[0].handle);
+
 
          $('#error'+elementname).text('');
         $('#error'+elementname).removeClass('select_error');

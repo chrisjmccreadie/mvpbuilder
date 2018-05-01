@@ -148,15 +148,24 @@ class Ajax extends CI_Controller {
 		$table = $this->input->post('table');
 		//remove the table from the array
 		unset($data['table']);
-		$imagefilename =  '';
-		$imagehandlename = '';
-
-		if (isset($data['imagefilename']))
+		$imagefile =  '';
+		$imagehandle = '';
+		$imagelement = '';
+		$imageurl = '';
+		if (isset($data['imagefile']))
 		{
-			$imagefilename = $data['imagefilename'];
-			unset($data['imagefilename']);
-			$imagehandlename = $data['imagehandlename'];
-			unset($data['imagehandlename']);
+			//todo (chris) remove the field for the image as this has to hold the id nstead
+			$imageurl = $data['imageurl'];
+			$imageurl = urldecode($imageurl);
+			unset($data['imageurl']);
+			$imagefilename = $data['imagefile'];
+			unset($data['imagefile']);
+			$imagehandle = $data['imagehandle'];
+			unset($data['imagehandle']);
+			$imagelement = $data['imagelement'];
+			//echo $imagelement;
+			unset($data['imagelement']);
+			unset($data[$imagelement]);
 		}
 		//set a blak query
 		$query = '';
@@ -169,7 +178,6 @@ class Ajax extends CI_Controller {
 			{
 				$query = "INSERT INTO `$table` (";
 
-				//`id`, `name`, `dateStarted`, `dateEnded`, `StartAmount`, `EndAmount`, `activeHunt`, `archived`, `description`) VALUES (NULL, '', '', '', '0', '0', '0', '0', '');"
 				$query = $query." `$key`";
 			}
 			else
@@ -188,7 +196,7 @@ class Ajax extends CI_Controller {
 				$values = $values." , '$value'";
 		}
 		$query = $query.$values.')';
-		//echo $query;
+		echo $query;
 		//exit;
 		//insert the record
 		$query = $this->generic_model->runQuery($query);
@@ -197,7 +205,19 @@ class Ajax extends CI_Controller {
 		if ($error['message'] != '') 
             echo 0;
         else
+        {
+        	$lastid = $this->db->insert_id();
+        	//echo $lastid;
+        	//add the image
+        	//note (chris) techincally we do not require the parentid here but it will make some bac end fuctions easier
+        	$sql = "INSERT INTO `image` (`parentid`, `filename`, `handle`, `cdn`) VALUES ( '$lastid', '$imagefilename', '$imagehandle', '$imageurl')";
+        	$this->generic_model->runQuery($sql);
+        	$lastid2 = $this->db->insert_id();
+        	//echo $lastid;
+        	$sql = "update `$table` set `$imagelement` = '$lastid2' where `id` ='$lastid'";
+        	$this->generic_model->runQuery($sql);
 			echo 1;
+        }
 
 	}
 
