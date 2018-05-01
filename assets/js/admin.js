@@ -75,7 +75,7 @@ function addrecorddone()
 
 function editrecorddone()
 {
-
+    console.log(callbackresult);
     if (callbackresult == 1)
     {
         alertMessage(recordUpdated,1,0);

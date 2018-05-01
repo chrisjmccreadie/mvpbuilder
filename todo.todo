@@ -12,9 +12,7 @@ admin:
    ☐ clean up session code
      ☐  set the fields to fetch in login from the exclude table
  table management:
-   ✔ add look up tables @done (18-05-01 18:32)
    ☐ add look up engine based on imported data (look_tablename)
-   ✔ area code look up @done (18-05-01 18:32)
    ☐ for varchars set a max length field
    ☐ hide option for fields (hide view + hide edit / add? override hide code already in system?)
    ☐ for int fields set a max and min legth for dropdowns and textfields
@@ -30,7 +28,7 @@ admin:
 data import class:
   ☐ inport from country.io
 image uploading:
-  ☐ store all the image information in an image table
+  ☐ store the image in the image table from admin
   ☐ display the image correcly in the table view
   ☐ display the image correctly in the edit view
 
@@ -45,6 +43,9 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ store all the image information in an image table @done (18-05-01 20:23) @project(image uploading)
+ ✔ area code look up @done (18-05-01 18:32) @project(admin / table management)
+ ✔ add look up tables @done (18-05-01 18:32) @project(admin / table management)
  ✔ extned the natrual sql rendering code to look in the tablemodifier table first. @done (18-05-01 12:48) @project(admin / table management)
  ✔ add all the SQL variant types datetime etc @done (18-05-01 12:48) @project(admin / table management / table updates)
  ✔ add a proper WYSIWYG editor text areas @done (18-05-01 12:48) @project(admin / table management / table updates)
