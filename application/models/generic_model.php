@@ -294,6 +294,10 @@ class Generic_model extends CI_Model {
 		$field->lookupdata = "";
 		$field->requiredhtml = '';
 		$field->requiredclass = '';
+		$field->imageurl = '';
+		$field->chooseimage = '';
+		$field->removeimage = '';
+
 		//todo (chris) set this up modifier table
 		$field->maxlength = '';		
 		//check the required field
@@ -302,6 +306,8 @@ class Generic_model extends CI_Model {
 			$field->requiredhtml = '*';
 			$field->requiredclass = 'required';
 		}
+
+		//set the remove andchhose
 
 
 		//check if its an id field if is return a hidden field
@@ -334,6 +340,17 @@ class Generic_model extends CI_Model {
 		      	 	$template = 'admin/formelements/dropdown';
 		       		break;	
 		    	case "image":	
+		    		if ($field->value == '')
+					{
+						$field->removeimage = "style='display: none;'";
+						$field->chooseimage = "";
+					}
+					else
+					{
+						$field->chooseimage = "style='display: none;'";
+						$field->removeimage = "";
+					}
+
 		    		$field->htmltype ='image';
 		      	 	$template = 'admin/formelements/image';
 		       		break;	
