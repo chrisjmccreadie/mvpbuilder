@@ -113,6 +113,16 @@ class Ajax extends CI_Controller {
 		unset($data['id']);
 		//remove the table from the array
 		unset($data['table']);
+		$imagefilename =  '';
+		$imagehandlename = '';
+
+		if (isset($data['imagefilename']))
+		{
+			$imagefilename = $data['imagefilename'];
+			unset($data['imagefilename']);
+			$imagehandlename = $data['imagehandlename'];
+			unset($data['imagehandlename']);
+		}
 		//create an update
 		$query = $this->generic_model->updateFromValueArray($table,$data,0,$id);
 		//run the query
