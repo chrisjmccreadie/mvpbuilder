@@ -63,8 +63,18 @@ function loginsuccess()
 function addrecorddone()
 {
     console.log(callbackresult);
-     if (callbackresult == 1)
+    if (callbackresult == 1)
     {
+        //remove the image
+        removeImage('');
+        //reset all the fields
+        $( ".formelement" ).each(function()
+        {
+            //reset
+            $(this).val('');
+            
+        });
+
         alertMessage(recordAddedSuccess,1,0);
     }
     else
@@ -267,33 +277,58 @@ function processrecord(updatetype)
     }
 }
 
+//this function removes the image
+function removeImage(elementname)
+{
+    //show the chose image button
+    $('#chooseimage').show();
+    //hide the remove image buton
+    $('#removeimage').hide();  
+    //delete the preview image
+    $('#imagepreview').html(''); 
+    //remove the hidden vars values
+    //$('#'+elementname).val('');
+    $('#imageurl').val('');
+    $('#imagefile').val('');
+    $('#imagehandle').val('');
+    $('#imagelement').val('');
+
+}
+
+//the element we are using.
 var elementname = '';
+
+//this function handles file uploads
+//todo (chris) make this work for multipile images
  var fsClient = filestack.init('AcmgIR4JRI6Qxp4TRF0lOz');
   function openPicker(elementname) {
     elementname = elementname;
     fsClient.pick({
       fromSources:["local_file_system","imagesearch","facebook","instagram","dropbox"]
-    }).then(function(response) {
-       console.log(response);
-        $('#image').attr('src','https://process.filestackapi.com/resize=width:400,height:200/'+response.filesUploaded[0].handle);
-        //document.getElementById(name).value = "tinkumaster";
-         $('#'+elementname).val(response.filesUploaded[0].url);
+    }).then(function(response) 
+    {
+        //hide the chose image button
+        $('#chooseimage').hide();
+        //show the remove image buton
+        $('#removeimage').show();
+        //build the preview image
+        var image = "<img id='image' name='image' class='' src='https://process.filestackapi.com/resize=width:100,height:100,fit:scale/"+response.filesUploaded[0].handle+"' ></img>";
+        //load the preview image
+        $('#imagepreview').html(image);
+        //set the element name to the url
+        $('#'+elementname).val(response.filesUploaded[0].url);
+        //set the hidden var to the element name
         $('#imageurl').val(response.filesUploaded[0].url);
+        //set the hidden var to the element filename
         $('#imagefile').val(response.filesUploaded[0].filename);
-        //$('#'+elementname).text(response.filesUploaded[0].url);
+        //set the hidden var to the element handle
         $('#imagehandle').val(response.filesUploaded[0].handle);
+        //set the hidden var to the element element
+        //note (chris) the element above may not be required         $('#'+elementname).val(response.filesUploaded[0].url);
         $('#imagelement').val(elementname);
-
-
-
-         $('#error'+elementname).text('');
+        //reset the error class
+        $('#error'+elementname).text('');
         $('#error'+elementname).removeClass('select_error');
-
-        //do we want to hide the chooser?
-       /// $('#choose'+elementname).text('');
-
-      // declare this function to handle response
-      console.log(response);
     });
   }
 
@@ -302,12 +337,7 @@ var elementname = '';
 $( document ).ready(function() 
 {
 
-
-
-
-
-
-
+    //load wysiwyg editor
     $('.wysiwyg').summernote({
         placeholder: '',
         tabsize: 2,

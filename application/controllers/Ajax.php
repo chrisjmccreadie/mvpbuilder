@@ -172,17 +172,22 @@ class Ajax extends CI_Controller {
 		$imageurl = '';
 		if (isset($data['imagefile']))
 		{
-			//todo (chris) remove the field for the image as this has to hold the id nstead
+			//get the image url and unset
 			$imageurl = $data['imageurl'];
-			$imageurl = urldecode($imageurl);
 			unset($data['imageurl']);
+			//decode the imageurl
+			$imageurl = urldecode($imageurl);
+			//get the image file and unset
 			$imagefile = $data['imagefile'];
 			unset($data['imagefile']);
+			//get the image handle and unset
 			$imagehandle = $data['imagehandle'];
 			unset($data['imagehandle']);
+			//get the image element and unset
 			$imagelement = $data['imagelement'];
 			//echo $imagelement;
 			unset($data['imagelement']);
+			//note (chris) do we require this?
 			unset($data[$imagelement]);
 		}
 		//set a blak query
@@ -214,8 +219,7 @@ class Ajax extends CI_Controller {
 				$values = $values." , '$value'";
 		}
 		$query = $query.$values.')';
-		echo $query;
-		//exit;
+		//echo $query;
 		//insert the record
 		$query = $this->generic_model->runQuery($query);
 		//make it check for sql errors 
@@ -224,17 +228,32 @@ class Ajax extends CI_Controller {
             echo 0;
         else
         {
+        	//get the lastid
         	$lastid = $this->db->insert_id();
-        	//echo $lastid;
         	//add the image
         	//note (chris) techincally we do not require the parentid here but it will make some bac end fuctions easier
         	$sql = "INSERT INTO `image` (`parentid`, `filename`, `handle`, `cdn`) VALUES ( '$lastid', '$imagefile', '$imagehandle', '$imageurl')";
         	$this->generic_model->runQuery($sql);
-        	$lastid2 = $this->db->insert_id();
-        	//echo $lastid;
-        	$sql = "update `$table` set `$imagelement` = '$lastid2' where `id` ='$lastid'";
-        	$this->generic_model->runQuery($sql);
-			echo 1;
+        	//check for error
+        	$error = $this->db->error();
+        	if ($error['message'] != '') 
+	            echo 0;
+	        else
+	        {
+	        	//get the image ide
+	        	$lastid2 = $this->db->insert_id();
+	        	//update the table with the image id
+	        	$sql = "update `$table` set `$imagelement` = '$lastid2' where `id` ='$lastid'";
+	        	$this->generic_model->runQuery($sql);
+	        	//check for error
+	        	$error = $this->db->error();
+				if ($error['message'] != '') 
+		            echo 0;
+		        else
+		        {
+					echo 1;
+				}
+			}
         }
 
 	}

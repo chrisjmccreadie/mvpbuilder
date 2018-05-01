@@ -2,13 +2,20 @@
 <div class='row'>
 		<div class='col-md-1'><label for='{name}'>{name}{requiredhtml}</label></div>
 		<div class='col-md-4'>
-			<a href="javascript:openPicker('{name}');"">choose</a>
-						<div id="error{name}"></div>
+			<a href="javascript:openPicker('{name}');" id="chooseimage" name="chooseimage">choose</a>
+			<a href="javascript:removeImage('{name}');" id="removeimage" name="removeimage" style="display: none;">remove</a>
 
-
+			
+			<div id="error{name}"></div>
 		</div>
-		<div class='col-md-8'>
-		<img id="image{name}" name="image{name}" class="" src="{value}" ></img>
+</div>
+<div class='row'>
+
+		<div class='col-md-1'>
+		</div>
+		<div class='col-md-4'>
+		<div id="imagepreview" name="imagepreview">
+		</div>
 		<input type='hidden' class='formelement'  name='{name}' id='{name}' value='{value}' data-required='{required}'>
 		<input type='hidden' class=''  name='imageurl' id='imageurl' value='{value}'>
 		<input type='hidden' class=''  name='imagefile' id='imagefile' value='{value}'>
