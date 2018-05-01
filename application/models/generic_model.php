@@ -252,9 +252,18 @@ class Generic_model extends CI_Model {
 		$required = '';
 		//set template var
 		$template = '';
+		$field->lookupdata = "";
+		$field->requiredhtml = '';
+		$field->requiredclass = '';
+		//todo (chris) set this up modifier table
+		$field->maxlength = '';		
 		//check the required field
-		if ($field->required  != '')
-			$required = 'required';
+		if ($field->required  == '1')
+		{
+			$field->requiredhtml = '*';
+			$field->requiredclass = 'required';
+		}
+
 
 		//check if its an id field if is return a hidden field
 		if ($field->name == 'id') 
@@ -271,21 +280,22 @@ class Generic_model extends CI_Model {
 		else
 		{
 			//$type = $field->type;
-			if ($field->htmltype != '')
+			if ($field->htmltype == '')
 			{
-				$field->type = $field->htmltype ;
+				$field->htmltype = $field->type ;
 			}
 			//echo "ll";
 			//print_r($field->type);
 			//echo "<br>";
 			//check the type to get the correct template
-			switch ($field->type) 
+			switch ($field->htmltype) 
 			{
-
+		    	case "dropdown":	
+		    		$field->htmltype ='dropdown';
+		      	 	$template = 'admin/formelements/dropdown';
+		       		break;	
 		    	case "image":	
-		    		$field->lookupdata = "";
 		    		$field->htmltype ='image';
-		    		$field->foreigndata = '';
 		      	 	$template = 'admin/formelements/image';
 		       		break;	
 		       	case "lookup":	
@@ -296,7 +306,6 @@ class Generic_model extends CI_Model {
 		    		//print_r($result->result());
 		    		$field->lookupdata = $result->result();
 		    		$field->htmltype ='select';
-		    		$field->foreigndata = '';
 		      	 	$template = 'admin/formelements/lookup';
 		       		break;				
 		    	case "textfield":	
@@ -304,10 +313,18 @@ class Generic_model extends CI_Model {
 		    		$field->htmltype = 'textfield';    		
 		      	 	$template = 'admin/formelements/textfield';
 		       		break;
+		    	case "textarea":	
+		    		//echo "tf";	
+		    		$field->htmltype = 'textfield';    		
+		      	 	$template = 'admin/formelements/textarea';
+		       		break;		       		
+
+
 		    	case "date":
 		      	 	$template = 'admin/formelements/date';
 		       		break;	
 		    	case "int":
+		    		$field->htmltype = 'select';   
 		    		$foreigndata = '';
             		foreach ($foreigntabledata as $item2)
             		{

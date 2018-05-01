@@ -15,16 +15,18 @@ admin:
    ☐ add look up tables
    ☐ country look up
    ☐ area code look up
-   ☐ extned the natrual sql rendering code to look in the tablemodifier table first.
   table updates:
    ☐ ajax loading of datatables for larger datasets (config item)
-   ☐ add a proper WYSIWYG editor text areas
    ☐ add a nice select (with find etc)
-   ☐ add all the SQL variant types datetime etc
    ☐ add inline editing
+   ☐ error code for add / edit record
+   ☐ hide option for fields (hide view + hide edit / add? override hide code already in system?)
   misc:
    ☐ add setup script
    ☐ change ajax to adminajax
+data import class:
+  ☐ inport from country.io
+
 
 
 
@@ -36,6 +38,9 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ extned the natrual sql rendering code to look in the tablemodifier table first. @done (18-05-01 12:48) @project(admin / table management)
+ ✔ add all the SQL variant types datetime etc @done (18-05-01 12:48) @project(admin / table management / table updates)
+ ✔ add a proper WYSIWYG editor text areas @done (18-05-01 12:48) @project(admin / table management / table updates)
  ✔ update the table admin ajax @done (18-04-30 00:30) @project(admin / table management)
  ✔ add look to table admin @done (18-04-30 00:29) @project(admin / table management)
  ✔ store the record in the tablemodifier tabke if there is a na @done (18-04-29 22:46)

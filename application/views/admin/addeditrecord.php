@@ -23,6 +23,7 @@
                     //loop through the fields
                     foreach ($fields as $item)
                     {
+                        //print_r($item);
                         //check if we have a record result (this means its an edit form)
                         if ($recordresult == '')
                         {

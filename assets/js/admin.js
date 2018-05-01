@@ -14,6 +14,10 @@ var recordUpdated = 'The record has been updated';
 var recordUpdatedError = 'The record was not updated';
 var fieldUpdated = 'The field has been updated';
 var fieldUpdatedError = 'The field was not updated';
+var fieldBlankError = 'Cannot be blank';
+var fieldNumberError = 'Must be a number';
+
+
 
 //set a global call  back
 var callbackresult = '';
@@ -179,27 +183,59 @@ function processrecord(updatetype)
 {
     //set the succes var 
     var success = 1;
-    //reset error classes
-    $( ".selecterrors" ).text('');
-    $( ".selecterrors" ).removeClass('select_error');
-    
-    //loop through the pickers 
-    $( ".picker" ).each(function()
+
+    //reset all errors
+    $( ".formelement" ).each(function()
     {
-        //get name of picker
+        //get name 
         var name = $(this).attr("name");
-        //check something is selected
-        if ($( this ).val() == '')
+        //resset the error
+        $('#error'+name).text('');
+        $('#error'+name).removeClass('select_error');
+    });
+           
+    //check the int types have a number
+    $( ".fieldint" ).each(function()
+    {
+        //get name 
+        var name = $(this).attr("name");
+        //get type
+        var type = $(this).val();
+        if(isNaN(type))
         {
-            //set the error
-            $('#error'+name).text(selectDropdownError);
+            $('#error'+name).text(fieldNumberError);
             $('#error'+name).addClass('select_error');
             
             success = 0;
-           
         }
-       
     });
+   
+    
+    //loop the form elements looking for blanks
+    $( ".formelement" ).each(function()
+    {
+        //get name 
+        var name = $(this).attr("name");
+        var required = $(this).attr("data-required");
+
+        //check something is selected
+        if (required == 1)
+        {
+            if ($( this ).val() == '')
+            {
+                //set the error
+                $('#error'+name).text(fieldBlankError);
+                $('#error'+name).addClass('select_error');
+                success = 0;
+            }
+        }
+    });
+
+
+    
+
+
+    return;
     //check it passed validation
     if (success == 1)
     {
@@ -224,15 +260,29 @@ function processrecord(updatetype)
     }
 }
 
+var elementname = '';
  var fsClient = filestack.init('AcmgIR4JRI6Qxp4TRF0lOz');
-  function openPicker() {
+  function openPicker(elementname) {
+    elementname = elementname;
     fsClient.pick({
       fromSources:["local_file_system","imagesearch","facebook","instagram","dropbox"]
     }).then(function(response) {
+        console.log(elementname);
+        $('#image'+elementname).attr('src','https://process.filestackapi.com/resize=width:400,height:200/'+response.filesUploaded[0].handle);
+        //document.getElementById(name).value = "tinkumaster";
+
+        $('#'+elementname).val(response.filesUploaded[0].url);
+        $('#imagefile'+elementname).val(response.filesUploaded[0].filename);
+        $('#imagehandle'+elementname).val(response.filesUploaded[0].handle);
+
+        //do we want to hide the chooser?
+       /// $('#choose'+elementname).text('');
+
       // declare this function to handle response
-      handleFilestack(response);
+      console.log(response);
     });
   }
+
 
 
 $( document ).ready(function() 
@@ -244,10 +294,20 @@ $( document ).ready(function()
 
 
 
-    $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
+    $('.wysiwyg').summernote({
+        placeholder: '',
         tabsize: 2,
-        height: 500
+        height: 500,
+         toolbar: [
+    // [groupName, [list of button]]
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']],
+    ['fontsize', ['fontsize']],
+    ['fontname', ['fontname']],
+    ['color', ['color']],
+    ['para', ['ul', 'ol', 'paragraph']],
+    ['height', ['height']]
+  ]
       });
 
 
