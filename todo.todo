@@ -12,15 +12,17 @@ admin:
    ☐ clean up session code
      ☐  set the fields to fetch in login from the exclude table
  table management:
-   ☐ add look up tables
-   ☐ country look up
-   ☐ area code look up
-  table updates:
+   ✔ add look up tables @done (18-05-01 18:32)
+   ☐ add look up engine based on imported data (look_tablename)
+   ✔ area code look up @done (18-05-01 18:32)
+   ☐ for varchars set a max length field
+   ☐ hide option for fields (hide view + hide edit / add? override hide code already in system?)
+   ☐ for int fields set a max and min legth for dropdowns and textfields
+   ☐ add inline editing
+  table view / inesert / edit:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add a nice select (with find etc)
    ☐ add inline editing
-   ☐ error code for add / edit record
-   ☐ hide option for fields (hide view + hide edit / add? override hide code already in system?)
   misc:
    ☐ add setup script
    ☐ change ajax to adminajax
@@ -30,7 +32,7 @@ image uploading:
   ☐ store all the image information in an image table
   ☐ display the image correcly in the table view
   ☐ display the image correctly in the edit view
-  
+
 
 
 
