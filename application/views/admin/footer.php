@@ -1,6 +1,7 @@
  	<!-- Bootstrap core JavaScript -->
     <script src="<?php echo base_url();?>assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://static.filestackapi.com/v3/filestack.js"></script>
 
       <!-- the admin js or the site -->
     <script src="<?php echo base_url();?>assets/js/admin.js"></script>
@@ -17,14 +18,14 @@
     <!-- date abd time picker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <!-- textarea wysiwyg -->
-    <script src="<?php echo base_url();?>assets/vendor/bootstrap-wysiwyg.js"></script>
+
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+
+
 
      <!-- google tag manager -->
 
-    <script>
-
-
-    </script>
 
 </body>
 </html>

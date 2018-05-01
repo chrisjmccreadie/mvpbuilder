@@ -245,6 +245,9 @@ class Generic_model extends CI_Model {
 	*/
 	function buildFormElement($field,$foreigntabledata = '')
 	{
+		//check its not a reserved field
+		if ($field->name == 'archived') 
+			return('');	
 		//print_r($field);
 		$required = '';
 		//set template var
@@ -278,7 +281,14 @@ class Generic_model extends CI_Model {
 			//check the type to get the correct template
 			switch ($field->type) 
 			{
-		    	case "lookup":	
+
+		    	case "image":	
+		    		$field->lookupdata = "";
+		    		$field->htmltype ='image';
+		    		$field->foreigndata = '';
+		      	 	$template = 'admin/formelements/image';
+		       		break;	
+		       	case "lookup":	
 		    		//get the table;
 		    		//print_r($field);
 		    		$sql = "select id,name from `$field->lookup`";

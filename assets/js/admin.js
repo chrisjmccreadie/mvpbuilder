@@ -224,9 +224,32 @@ function processrecord(updatetype)
     }
 }
 
+ var fsClient = filestack.init('AcmgIR4JRI6Qxp4TRF0lOz');
+  function openPicker() {
+    fsClient.pick({
+      fromSources:["local_file_system","imagesearch","facebook","instagram","dropbox"]
+    }).then(function(response) {
+      // declare this function to handle response
+      handleFilestack(response);
+    });
+  }
+
 
 $( document ).ready(function() 
 {
+
+
+
+
+
+
+
+    $('#summernote').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 500
+      });
+
 
     //this function deals with the type drop down.  It has to disbale the lookup drop down if it is not required.
     //note (chris) we blank the select when we disbale it, it may prove poor ux and if this is the case will then change
@@ -311,8 +334,7 @@ $( document ).ready(function()
     //date and time picker
     $('.datepicker').datepicker({});
 
-    //todo (chris) get wysiwyg working
-    $('#editor').wysiwyg();
+    
 
     $('.selectpicker').selectpicker({});
 
