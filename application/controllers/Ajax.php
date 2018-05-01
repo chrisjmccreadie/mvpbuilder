@@ -138,6 +138,10 @@ class Ajax extends CI_Controller {
 		$table = $this->input->post('table');
 		//remove the table from the array
 		unset($data['table']);
+		$imagefilename = $data['imagefilename'];
+		unset($data['imagefilename']);
+		$imagehandlename = $data['imagehandlename'];
+		unset($data['imagehandlename']);
 		//set a blak query
 		$query = '';
 		//loop through all the fields to build the query
@@ -168,6 +172,8 @@ class Ajax extends CI_Controller {
 				$values = $values." , '$value'";
 		}
 		$query = $query.$values.')';
+		//echo $query;
+		//exit;
 		//insert the record
 		$query = $this->generic_model->runQuery($query);
 		//make it check for sql errors 

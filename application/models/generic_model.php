@@ -69,6 +69,45 @@ class Generic_model extends CI_Model {
 	START OF SQL PROCESSING
 	*/
 
+	//this function builds the where part of the statement.
+	//note (chris) we have to figure out when to add a where or and and statement.  
+	//			   we could use the built in ci functions to handle it.
+	function buildWhere($table,$addWhere = 0)
+	{
+		
+		$wherestatemennt = '';
+
+		/*
+		if ($addwhere == 1)
+		{
+			$wherestatemennt = 'where';
+		}
+		*/
+		
+		//$i = 0;
+		foreach ($this->db->list_fields($table) as $item)
+		{
+			if ($item == "active")
+			{
+				if ($wherestatemennt == '')
+					$wherestatemennt = " where `active` = 1";
+				else
+					$wherestatemennt = $wherestatemennt." and `active` = 1";
+			}
+			if ($item == "archived")
+			{
+				if ($wherestatemennt == '')
+					$wherestatemennt = " where `archived` = 0";			
+				else
+					$wherestatemennt = $wherestatemennt." and `archived` = 0";	
+			}
+
+
+			//$i++;	
+		}
+		return($wherestatemennt);
+	}
+
 	/*
 
 		Tthis function fetches a product from the choosed product table.
@@ -128,7 +167,7 @@ class Generic_model extends CI_Model {
 		//get the fields and check if it has an active and / or archived
 		$active = '';
 		$archived = '';
-		foreach ($this->db->list_fields($tabl) as $item)
+		foreach ($this->db->list_fields($table) as $item)
 		{
 			if ($item == "active")
 				$active = "and active = 1";
@@ -301,7 +340,12 @@ class Generic_model extends CI_Model {
 		       	case "lookup":	
 		    		//get the table;
 		    		//print_r($field);
-		    		$sql = "select id,name from `$field->lookup`";
+
+		       		//todo (chris) unify this in its own function as its ben reused a bit
+
+		       		$wherestatemennt = $this->buildWhere($field->lookup);
+			       	
+		    		$sql = "select id,name from `$field->lookup` $wherestatemennt";
 		    		$result = $this->runQuery($sql);
 		    		//print_r($result->result());
 		    		$field->lookupdata = $result->result();

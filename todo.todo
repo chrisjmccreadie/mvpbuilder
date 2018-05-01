@@ -26,7 +26,11 @@ admin:
    ☐ change ajax to adminajax
 data import class:
   ☐ inport from country.io
-
+image uploading:
+  ☐ store all the image information in an image table
+  ☐ display the image correcly in the table view
+  ☐ display the image correctly in the edit view
+  
 
 
 
