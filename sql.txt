@@ -131,10 +131,11 @@ CREATE TABLE `tablemodifier` (
   `id` int(11) NOT NULL,
   `table` varchar(255) NOT NULL,
   `field` varchar(255) NOT NULL,
+  `lookup` varchar(255) NOT NULL,
   `htmltype` varchar(255) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
   `required` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tablemodifier`
@@ -160,3 +161,36 @@ ALTER TABLE `tablemodifier`
 --
 ALTER TABLE `tablemodifier`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+
+
+  --
+-- Table structure for table `image`
+--
+
+CREATE TABLE `image` (
+  `id` int(11) NOT NULL,
+  `parentid` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `handle` varchar(255) NOT NULL,
+  `cdn` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `image`
+--
+ALTER TABLE `image`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `image`
+--
+ALTER TABLE `image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
