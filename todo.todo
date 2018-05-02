@@ -17,16 +17,11 @@ admin:
    ☐ hide option for fields (hide view + hide edit / add? override hide code already in system?)
    ☐ for int fields set a max and min legth for dropdowns and textfields
    ☐ add inline editing
-   ✔ add checkbox* @done (18-05-02 14:47)
   table view / inesert / edit:
    ☐ ajax loading of datatables for larger datasets (config item)
-   ☐ add a nice select (with find etc)
    ☐ add inline editing
-   ☐ edit wysiwg bug * 
   misc:
    ☐ add setup script
-   ☐ change ajax to adminajax*
-   ☐ move filestack to config & hidden var*
   data import class:
    ☐ inport from country.io
 
@@ -42,6 +37,11 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ add a nice select (with find etc) @done (18-05-02 16:30) @project(admin / table management / table view / inesert / edit)
+ ✔ edit wysiwg bug * @done (18-05-02 16:07) @project(admin / table management / table view / inesert / edit)
+ ✔ move filestack to config & hidden var* @done (18-05-02 15:59) @project(admin / table management / misc)
+ ✔ change ajax to adminajax* @done (18-05-02 15:33) @project(admin / table management / misc)
+ ✔ add checkbox* @done (18-05-02 14:47) @project(admin / table management)
  ✔ show image in table view @done (18-05-02 02:07) @project(admin / table management / table view / inesert / edit)
  ✔ edit imge clean up @done (18-05-02 01:12) @project(admin / table management / table view / inesert / edit)
  ✔ display the image correctly in the edit view @done (18-05-02 01:12) @project(image uploading)

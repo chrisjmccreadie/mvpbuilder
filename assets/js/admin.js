@@ -352,21 +352,31 @@ var elementname = '';
 $( document ).ready(function() 
 {
 
+    /*
+        SET UP THE ELEMENTS
+    */
+    //initialise the select pickers
     $('.selectpicker').selectpicker();
 
+    //initalise the datatable
+    //note (chris) if there is no table on this page this may throw an error on some browsers if this is the case then we will have to 
+    //             check if the elements exists before initalising it.
+    $('#admintable').DataTable();
 
-    $('.fieldcheckbox').change(function(){
+    //date and time picker
+    $('.datepicker').datepicker({});
+
+    //this function checks for check box to be ticked
+    $('.fieldcheckbox').change(function()
+    {
+        //get the element name
         elementname = $(this).attr('data-id');
+        //is it checked?
         if ($(this).is(':checked')) 
-        {
             $('#'+elementname).val('1');
-            
-        }
         else
-        {
             $('#'+elementname).val('0');
           
-        }
     });
 
     //load wysiwyg editor
@@ -375,16 +385,30 @@ $( document ).ready(function()
         tabsize: 2,
         height: 500,
          toolbar: [
-    // [groupName, [list of button]]
-    ['style', ['bold', 'italic', 'underline', 'clear']],
-    ['font', ['strikethrough', 'superscript', 'subscript']],
-    ['fontsize', ['fontsize']],
-    ['fontname', ['fontname']],
-    ['color', ['color']],
-    ['para', ['ul', 'ol', 'paragraph']],
-    ['height', ['height']]
-  ]
+                    // [groupName, [list of button]]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                  ]
       });
+
+
+    //start with menu open
+    $("#wrapper").toggleClass("toggled");
+
+    /*
+    END OF ELEMENT SETUP
+    */
+
+    //toggle class open and close the menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
 
 
     //this function deals with the type drop down.  It has to disbale the lookup drop down if it is not required.
@@ -451,31 +475,6 @@ $( document ).ready(function()
 
     });
     
-    //start with menu open
-    $("#wrapper").toggleClass("toggled");
-
-    //toggle class open and close the menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-
-
-   
-    //initalise the datatable
-    //note (chris) if there is no table on this page this may throw an error on some browsers if this is the case then we will have to 
-    //             check if the elements exists before initalising it.
-	$('#admintable').DataTable();
-
-    //date and time picker
-    $('.datepicker').datepicker({});
-
-    
-
-    $('.selectpicker').selectpicker({});
-
-    
-
      //this function adds a record
     $("#updaterecord").click(function(e) 
     {
