@@ -691,11 +691,20 @@ class Generic_model extends CI_Model {
 		//loop through each array element
 		foreach ($data as $key => $value)
 		{
+			
+			//echo $value."<br>";
 			//checks to see if the field is in the databse
 			//note (chris) this is done as we cannoy always trust what the form seralise sense us for example a checkbox requires a checkbox and a hidne field
 			$allowit = 0;
 			foreach ($fields as $key2 =>$value2)
 			{
+				//print_r($value2);
+				if (($value2->type == 'text') || ($value2->type == 'varchar'))
+				{
+					//decode it
+					$value = urldecode($value);
+
+				}
 				if ($value2->name == $key)
 					$allowit = 1;
 			}

@@ -177,7 +177,7 @@ function deletetablerecord(id)
                {
                     var data = { id: id,table: $('#table').val() }
                     //get the tables
-                    var url = rootUrl+'/ajax/deleterecord';
+                    var url = rootUrl+'/adminajax/deleterecord';
                     //call it
                     postAjax(url, data,'deleterecorddone()');
                     
@@ -278,13 +278,13 @@ function processrecord(updatetype)
         //set the url to call edit or add
         if (updatetype == 'edit')
         {
-            var url = rootUrl+'/ajax/editrecord';
+            var url = rootUrl+'/adminajax/editrecord';
              //call it
             postAjax(url, data,'editrecorddone()');
         }
         else
         {
-            var url = rootUrl+'/ajax/addrecord';
+            var url = rootUrl+'/adminajax/addrecord';
              //call it
             postAjax(url, data,'addrecorddone()');
         }
@@ -315,7 +315,7 @@ var elementname = '';
 
 //this function handles file uploads
 //todo (chris) make this work for multipile images
- var fsClient = filestack.init('AcmgIR4JRI6Qxp4TRF0lOz');
+ var fsClient = filestack.init($('#filestackapikey').val());
   function openPicker(elementname) {
     elementname = elementname;
     fsClient.pick({
@@ -443,7 +443,7 @@ $( document ).ready(function()
         //var data = "{table:"+table+",lookup:"+lookup+",field:"+field+",type:"+htmltype+",required:"+required+"}";
 
         //build the url
-        var url = rootUrl+'/ajax/updatetablemeta';
+        var url = rootUrl+'/adminajax/updatetablemeta';
         postAjax(url, {table:table,field:field,type:htmltype,required:required,lookup:lookup},'updatetablemetasuccess()');
 
     });
@@ -509,7 +509,7 @@ $( document ).ready(function()
         if (loggedin == 1)
         {
         	//build the url
-            var url = rootUrl+'/ajax/checkLogin';
+            var url = rootUrl+'/adminajax/checkLogin';
             postAjax(url, { password: $('#password').val(), email: $('#email').val() },'loginsuccess()');
 
         }

@@ -1,4 +1,7 @@
- 	<!-- Bootstrap core JavaScript -->
+ 	<!-- file stack api -->
+    <input type='hidden' class=''  name='filestackapikey' id='filestackapikey' value="<?php echo $this->config->item('filestackapikey');?>">
+
+    <!-- Bootstrap core JavaScript -->
     <script src="<?php echo base_url();?>assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?php echo base_url();?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://static.filestackapi.com/v3/filestack.js"></script>
@@ -13,18 +16,12 @@
     <script  src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js" ></script>
     <!-- Latest compiled and minified JavaScript bootstrap select-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-
-
     <!-- date abd time picker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <!-- textarea wysiwyg -->
-
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 
-
-
-     <!-- google tag manager -->
+     <!-- todo google tag manager -->
 
 
 </body>
