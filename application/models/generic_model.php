@@ -69,6 +69,18 @@ class Generic_model extends CI_Model {
 	START OF SQL PROCESSING
 	*/
 
+	function getImage($field)
+	{
+		//print_r($field);
+		$parentid = $field->value;
+		$sql = "select * from `image` where `id` = '$parentid'";
+		$result = $this->runQuery($sql);
+		if ($result->num_rows() > 0)
+			return($result->result());
+		else
+			return('');
+	}
+
 	//this function builds the where part of the statement.
 	//note (chris) we have to figure out when to add a where or and and statement.  
 	//			   we could use the built in ci functions to handle it.
@@ -294,7 +306,9 @@ class Generic_model extends CI_Model {
 		$field->lookupdata = "";
 		$field->requiredhtml = '';
 		$field->requiredclass = '';
-		$field->imageurl = '';
+		$field->imagecdn = '';
+		$field->imagehandle = '';
+		$field->imagefilename = '';
 		$field->chooseimage = '';
 		$field->removeimage = '';
 
@@ -342,16 +356,33 @@ class Generic_model extends CI_Model {
 		    	case "image":	
 		    		if ($field->value == '')
 					{
+						
 						$field->removeimage = "style='display: none;'";
 						$field->chooseimage = "";
 					}
 					else
 					{
-						$field->chooseimage = "style='display: none;'";
-						$field->removeimage = "";
+						$result = $this->getImage($field);
+						//echo $result[0]->filename;
+						//exit;
+						if ($result != '')
+						{
+							$field->imagecdn = $result[0]->cdn;
+							$field->imagehandle = $result[0]->handle;
+							$field->imagefilename = $result[0]->filename;
+							$field->chooseimage = "style='display: none;'";
+							$field->removeimage = "";
+						}
+						else
+						{
+							$field->removeimage = "style='display: none;'";
+							$field->chooseimage = "";
+						}
+						
 					}
 
 		    		$field->htmltype ='image';
+		    		//print_r($field);
 		      	 	$template = 'admin/formelements/image';
 		       		break;	
 		       	case "lookup":	

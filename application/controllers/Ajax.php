@@ -137,11 +137,24 @@ class Ajax extends CI_Controller {
 		//echo $sql;
 		//run the query
 		$query = $this->generic_model->runQuery($sql);
+
 		//todo (chris) update the image only do this if it has changed
 		if ($imagefile != '')
 		{
 			$sql = "update `image` set `filename` = '$imagefile', `handle`='$imagehandle', `cdn` ='$imageurl' where `parentid` = '$id'" ;
 			//echo $sql;
+			$this->generic_model->runQuery($sql);
+		}
+		else
+		{
+			//remove the image
+			$sql = "delete from `image`  where `parentid` = '$id' ";
+			//echo $sql;
+			$this->generic_model->runQuery($sql);
+			//todo (chris) remove the pointer to it we have to know the filed 
+			$sql = "update `$table` set `$imagelement` = '' where `id` = '$id'" ;
+			//echo $sql;
+			//exit;
 			$this->generic_model->runQuery($sql);
 		}
 		

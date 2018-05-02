@@ -6,7 +6,7 @@
 			<a href="javascript:removeImage('{name}');" id="removeimage" name="removeimage" {removeimage} > remove</a>
 
 			
-			<div id="error{name}"></div>
+			<div id="errorimage"></div>
 		</div>
 </div>
 <div class='row'>
@@ -16,19 +16,18 @@
 		<div class='col-md-4'>
 		<div id="imagepreview" name="imagepreview">
 			<?php
-			if ($imageurl != '')
+			if ($imagecdn != '')
 			{
 			?>
-			<img src={imageurl}></img>
+			<img src='https://process.filestackapi.com/resize=width:100,height:100,fit:scale/{imagehandle}'></img>
 			<?php
 			}
 			?>
 		</div>
-		<input type='hidden' class='formelement'  name='{name}' id='{name}' value='{value}' data-required='{required}'>
-		<input type='hidden' class=''  name='imageurl' id='imageurl' value='{value}'>
-		<input type='hidden' class=''  name='imagefile' id='imagefile' value='{value}'>
-		<input type='hidden' class=''  name='imagehandle' id='imagehandle' value=''>
-		<input type='hidden' class=''  name='imagelement' id='imagelement' value=''>
+		<input type='hidden' class='formelement'  name='imageurl' id='imageurl' value='{imagecdn}' data-required='{required}' >
+		<input type='hidden' class=''  name='imagefile' id='imagefile' value='{imagefilename}'>
+		<input type='hidden' class=''  name='imagehandle' id='imagehandle' value='{imagehandle}'>
+		<input type='hidden' class=''  name='imagelement' id='imagelement' value='{name}'>
 
 
 		</div>

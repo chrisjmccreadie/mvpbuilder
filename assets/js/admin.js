@@ -228,6 +228,12 @@ function processrecord(updatetype)
         //get name 
         var name = $(this).attr("name");
         var required = $(this).attr("data-required");
+        if ((name == 'imageurl') && (required == '1'))
+        {
+            $('#errorimage').text(fieldBlankError);
+            $('#errorimage').addClass('select_error');
+            success = 0;
+        }
         //alert(required);
 
         //check something is selected
@@ -291,7 +297,7 @@ function removeImage(elementname)
     $('#imageurl').val('');
     $('#imagefile').val('');
     $('#imagehandle').val('');
-    $('#imagelement').val('');
+    //$('#imagelement').val('');
 
 }
 
@@ -327,8 +333,8 @@ var elementname = '';
         //note (chris) the element above may not be required         $('#'+elementname).val(response.filesUploaded[0].url);
         $('#imagelement').val(elementname);
         //reset the error class
-        $('#error'+elementname).text('');
-        $('#error'+elementname).removeClass('select_error');
+        $('#errorimage').text('');
+        $('#errorimage').removeClass('select_error');
     });
   }
 
