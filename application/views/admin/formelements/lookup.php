@@ -9,7 +9,7 @@
 			//todo (chris) we should really use the parsing so this is due for a refactor
 			if ($lookupdata != '')
 			{
-				echo "<select class='form-control formelement' data-live-search='true' name='{name}' id='{name}' data-required='{required}'  >";
+				echo "<select class='form-control formelement selectpicker' data-live-search='true' name='{name}' id='{name}' data-required='{required}'  >";
 				echo "<option value=''>Please  select</option>";
 				foreach ($lookupdata as $lookupitem)
 				{

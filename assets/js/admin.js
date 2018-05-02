@@ -352,6 +352,9 @@ var elementname = '';
 $( document ).ready(function() 
 {
 
+    $('.selectpicker').selectpicker();
+
+
     $('.fieldcheckbox').change(function(){
         elementname = $(this).attr('data-id');
         if ($(this).is(':checked')) 
