@@ -60,7 +60,7 @@
 	            		//int dropdown
 	            		$intselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown","Lookup"=>"lookup","Checkbox"=>'checkbox');
 	            		//date dropdown
-	            		$dateselect = array("Date"=>"Date");
+	            		$dateselect = array("Date"=>"date");
 	            		//varchar dropdown
 	            		$varcharselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown","Image"=>"image");
 	            		//teext dropdpwn

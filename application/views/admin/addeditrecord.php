@@ -23,33 +23,37 @@
                     //loop through the fields
                     foreach ($fields as $item)
                     {
-                        //print_r($item);
-                        //check if we have a record result (this means its an edit form)
-                        if ($recordresult == '')
+                        
+                        if (($item->hideedit == 0) || ($item->hideedit == ''))
                         {
-                            //set the value to false
-                            $item->value = '';
-                        }
-                        else
-                        {
-                            //we have data so lets se the value
-                            foreach ($recordresult as $key => $value)
+                            //print_r($item);
+                            //check if we have a record result (this means its an edit form)
+                            if ($recordresult == '')
                             {
-                                //does it match
-                                if ($key == $item->name)
+                                //set the value to false
+                                $item->value = '';
+                            }
+                            else
+                            {
+                                //we have data so lets se the value
+                                foreach ($recordresult as $key => $value)
                                 {
-                                    $item->value = $value;
-                                }
-                            }  
-                        }
-                        //build the element
-                        $fieldoutput = $this->generic_model->buildFormElement($item,$foreigntabledata);
-                        //output the element
-                        if ($fieldoutput != '')
-                        {
-                            echo "<div class='form-group' >";
-                            echo $fieldoutput; 
-                            echo "</div>";
+                                    //does it match
+                                    if ($key == $item->name)
+                                    {
+                                        $item->value = $value;
+                                    }
+                                }  
+                            }
+                            //build the element
+                            $fieldoutput = $this->generic_model->buildFormElement($item,$foreigntabledata);
+                            //output the element
+                            if ($fieldoutput != '')
+                            {
+                                echo "<div class='form-group' >";
+                                echo $fieldoutput; 
+                                echo "</div>";
+                            }
                         }
                     }
                 ?>

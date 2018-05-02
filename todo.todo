@@ -12,7 +12,6 @@ admin:
    ☐ for varchars set a max length field
    ☐ for int fields set a max and min legth for dropdowns and textfields
    ☐ add inline editing
-   ☐ hide edit / insert
    ☐ hide view id bug
   table view / inesert / edit:
    ☐ ajax loading of datatables for larger datasets (config item)
@@ -30,6 +29,7 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ hide edit / insert @done (18-05-02 18:58) @project(admin / table management)
  ✔ hide option for fields (hide view + hide edit / add? override hide code already in system?) @done (18-05-02 18:02) @project(admin / table management)
  ✔ set the fields to fetch in login from the exclude table @done (18-05-02 17:02) @project(admin / session code)
  ✔ clean up session code @done (18-05-02 17:02) @project(admin / session code)
