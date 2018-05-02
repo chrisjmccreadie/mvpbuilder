@@ -69,9 +69,59 @@ class Generic_model extends CI_Model {
 	START OF SQL PROCESSING
 	*/
 
+	
+
+	function getImageById($table,$field,$id)
+	{
+		//echo $table;
+		//echo $field;
+		//echo $id;
+		//exit;
+
+		$sql = "select * from `tablemodifier` where `table` = '$table' and `field` = '$field' and `active` = 1 and `htmltype` = 'image'";
+		//echo $sql;
+		$result = $this->runQuery($sql);
+		//echo $result->num_rows();
+		//return('');
+		if ($result->num_rows() > 0)
+		{
+			$ret = $result->row();
+			//now get the id 
+			$sql = "select * from `$ret->table` where id = '$id'";
+			//echo $sql;
+			$result2 = $this->runQuery($sql);
+			$ret2 = $result2->row();
+			//print_r($ret2);
+			foreach ($ret2 as $key => $value)
+			{
+				
+				if ($key == $field)
+				{
+					//echo $key;
+					//echo $value."<br>";
+					$sql = "select * from `image` where `id` = '$value'";
+					//echo $sql;
+					$result3 = $this->runQuery($sql);
+					if ($result3->num_rows() > 0)
+					{
+						$ret3 = $result3->row();
+						//print_r($ret3);
+						//exit;
+						return($ret3);
+					}
+
+				}
+			}
+			
+		}
+		return('');
+	}
+	
+
 	function getImage($field)
 	{
 		//print_r($field);
+		//exit;
 		$parentid = $field->value;
 		$sql = "select * from `image` where `id` = '$parentid'";
 		$result = $this->runQuery($sql);
@@ -528,6 +578,7 @@ class Generic_model extends CI_Model {
 					$ret = $result->row();
 					//debug
 					//print_r($ret);
+
 					//loop through the remaining fields and add them
 					//note (chris) this may seem a a little veborse but it means we can extend this table for ever without ever having to
 					//worry about updating this code.
@@ -536,6 +587,7 @@ class Generic_model extends CI_Model {
 						//set the field
 						$fields[$i]->$key = $value;
 					} 
+					
 					
 				}
 				else
@@ -567,10 +619,14 @@ class Generic_model extends CI_Model {
 				//get rid of it is id,active or archived field
 			//	unset($fields[$i]);
 			//}
+
+
 			$i++;
 
 
 		}
+
+		
 
 		return($fields);
 

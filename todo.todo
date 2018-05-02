@@ -22,17 +22,13 @@ admin:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add a nice select (with find etc)
    ☐ add inline editing
-   ✔ reset inputs when added @done (18-05-01 23:15)
-   ☐ wysiwyg urldecode
-   ☐ edit imge clean up
+   ☐ show image in table view
   misc:
    ☐ add setup script
    ☐ change ajax to adminajax
 data import class:
   ☐ inport from country.io
 image uploading:
-  ☐ display the image correcly in the table view
-  ☐ display the image correctly in the edit view
 
 
 
@@ -45,6 +41,11 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ edit imge clean up @done (18-05-02 01:12) @project(admin / table management / table view / inesert / edit)
+ ✔ display the image correctly in the edit view @done (18-05-02 01:12) @project(image uploading)
+ ✔ display the image correcly in the table view @done (18-05-02 01:12) @project(image uploading)
+ ✔ wysiwyg urldecode @done (18-05-01 23:30) @project(admin / table management / table view / inesert / edit)
+ ✔ reset inputs when added @done (18-05-01 23:15) @project(admin / table management / table view / inesert / edit)
  ✔ display the image correctly in the add view @done (18-05-01 23:00) @project(image uploading)
  ✔ store the image in the image table from admin @done (18-05-01 22:59) @project(image uploading)
  ✔ store all the image information in an image table @done (18-05-01 20:23) @project(image uploading)

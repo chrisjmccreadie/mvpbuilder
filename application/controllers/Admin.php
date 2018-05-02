@@ -128,10 +128,10 @@ class Admin extends CI_Controller {
 		//store the fields for processing.
 		$data['fields'] = $this->generic_model->getTableModifiers($data['table']);
 
-		//print_r($data['fields']);
-		//exit;
+		
 		//store the results for the view to process.
 		$data['result'] = $query->result();
+		
 		//get the assoicated datasets
 		
 		$data['foreigntabledata'] = $this->generic_model->getDataSet($table,$data['fields']);

@@ -79,9 +79,10 @@
 
 					            	echo "<tr id='row$item->id'>";
 					            	//loop through each item.
-					            	//print_r($item);
+					            	
 			            			foreach ($item as $key => $value)
 			            			{
+			            				
 
 			            				//loop through the foreign data array
 				                		foreach ($foreigntabledata as $item2)
@@ -96,6 +97,7 @@
 				                					//loop through the foreign data values
 				                					foreach ($value2 as $item3)
 			            							{
+
 			            								//check if it matches
 			            								if ($item3->id == $value)
 			            									$value = $item3->name;
@@ -103,7 +105,15 @@
 				                				}
 				                			}
 				                		}
-					            		
+
+				                		//check for an image
+					            		$result = $this->generic_model->getImageById($table, $key,$item->id);
+					            		//print_r($result);
+					            		if (is_object($result))
+					            		{
+					            			$value = "<img src='https://process.filestackapi.com/resize=width:50,height:50,fit:scale/".$result->handle."'/>";
+					            		}
+
 			            				echo "<td>$value</td>";
 			            			}
 			            			echo "<td>";
