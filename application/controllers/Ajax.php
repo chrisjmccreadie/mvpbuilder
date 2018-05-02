@@ -205,19 +205,32 @@ class Ajax extends CI_Controller {
 		}
 		//set a blak query
 		$query = '';
+		$fields = $this->db->field_data($table);
+
 		//loop through all the fields to build the query
 		//todo (chris) replace this with a generic query when it is used more than once
 		foreach ($data as $key => $value)
 		{
-			//check if it is the first pass as we do not want to add a , if it is not
-			if ($query == '')
+			$allowit = 0;
+			foreach ($fields as $key2 =>$value2)
 			{
-				$query = "INSERT INTO `$table` (";
-
-				$query = $query." `$key`";
+				if ($value2->name == $key)
+					$allowit = 1;
 			}
-			else
-				$query = $query." , `$key`";
+			
+			if ($allowit == 1)
+			{
+
+				//check if it is the first pass as we do not want to add a , if it is not
+				if ($query == '')
+				{
+					$query = "INSERT INTO `$table` (";
+
+					$query = $query." `$key`";
+				}
+				else
+					$query = $query." , `$key`";
+			}
 		}
 		//add the next part of the query
 		$query = $query.') values (';
@@ -225,11 +238,20 @@ class Ajax extends CI_Controller {
 		$values = '';
 		foreach ($data as $key => $value)
 		{
-			$value = urldecode($value);
-			if ($values == '')
-				$values = $values."  '$value'";
-			else
-				$values = $values." , '$value'";
+			$allowit = 0;
+			foreach ($fields as $key2 =>$value2)
+			{
+				if ($value2->name == $key)
+					$allowit = 1;
+			}
+			if ($allowit == 1)
+			{
+				$value = urldecode($value);
+				if ($values == '')
+					$values = $values."  '$value'";
+				else
+					$values = $values." , '$value'";
+			}
 		}
 		$query = $query.$values.')';
 		//echo $query;
@@ -241,32 +263,41 @@ class Ajax extends CI_Controller {
             echo 0;
         else
         {
-        	//get the lastid
-        	$lastid = $this->db->insert_id();
-        	//add the image
-        	//note (chris) techincally we do not require the parentid here but it will make some bac end fuctions easier
-        	$sql = "INSERT INTO `image` (`parentid`, `filename`, `handle`, `cdn`) VALUES ( '$lastid', '$imagefile', '$imagehandle', '$imageurl')";
-        	$this->generic_model->runQuery($sql);
-        	//check for error
-        	$error = $this->db->error();
-        	if ($error['message'] != '') 
-	            echo 0;
-	        else
-	        {
-	        	//get the image ide
-	        	$lastid2 = $this->db->insert_id();
-	        	//update the table with the image id
-	        	$sql = "update `$table` set `$imagelement` = '$lastid2' where `id` ='$lastid'";
+        	//check we have to add an image
+        	if ($imagefile != '')
+        	{
+	        	//get the lastid
+	        	$lastid = $this->db->insert_id();
+	        	//add the image
+	        	//note (chris) techincally we do not require the parentid here but it will make some bac end fuctions easier
+	        	$sql = "INSERT INTO `image` (`parentid`, `filename`, `handle`, `cdn`) VALUES ( '$lastid', '$imagefile', '$imagehandle', '$imageurl')";
 	        	$this->generic_model->runQuery($sql);
 	        	//check for error
 	        	$error = $this->db->error();
-				if ($error['message'] != '') 
+	        	if ($error['message'] != '') 
 		            echo 0;
 		        else
 		        {
-					echo 1;
+		        	//get the image ide
+		        	$lastid2 = $this->db->insert_id();
+		        	//update the table with the image id
+		        	$sql = "update `$table` set `$imagelement` = '$lastid2' where `id` ='$lastid'";
+		        	$this->generic_model->runQuery($sql);
+		        	//check for error
+		        	$error = $this->db->error();
+					if ($error['message'] != '') 
+			            echo 0;
+			        else
+			        {
+						echo 1;
+					}
 				}
 			}
+			else
+			{
+				echo 1;
+			}
+
         }
 
 	}

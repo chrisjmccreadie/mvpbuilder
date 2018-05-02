@@ -399,6 +399,20 @@ class Generic_model extends CI_Model {
 			//check the type to get the correct template
 			switch ($field->htmltype) 
 			{
+		    	case "checkbox":
+		    		//print_r($field);
+		    		$field->checked = '';	
+		    		if ($field->value == '')
+		    		{
+		    			$field->checked = '';	
+		    		}
+		    		if ($field->value == '1')
+		    		{
+		    			$field->checked = 'checked';
+		    		}
+		    		$field->htmltype ='checkbox';
+		      	 	$template = 'admin/formelements/checkbox';
+		       		break;				
 		    	case "dropdown":	
 		    		$field->htmltype ='dropdown';
 		      	 	$template = 'admin/formelements/dropdown';
@@ -670,18 +684,33 @@ class Generic_model extends CI_Model {
 
 	function updateFromValueArray($table,$data,$id = '')
 	{
+		//get the fields for the table
+		$fields = $this->db->field_data($table);
+		//print_r($fields);
 		$query = '';
 		//loop through each array element
 		foreach ($data as $key => $value)
 		{
-			//check if it is the first pass as we do not want to add a , if it is not
-			if ($query == '')
+			//checks to see if the field is in the databse
+			//note (chris) this is done as we cannoy always trust what the form seralise sense us for example a checkbox requires a checkbox and a hidne field
+			$allowit = 0;
+			foreach ($fields as $key2 =>$value2)
 			{
-				$query = "UPDATE `$table` set ";
-				$query = $query." `$key` = '$value'";
+				if ($value2->name == $key)
+					$allowit = 1;
 			}
-			else
-				$query = $query." , `$key` = '$value'";
+			
+			if ($allowit == 1)
+			{
+				//check if it is the first pass as we do not want to add a , if it is not
+				if ($query == '')
+				{
+					$query = "UPDATE `$table` set ";
+					$query = $query." `$key` = '$value'";
+				}
+				else
+					$query = $query." , `$key` = '$value'";
+			}
 		}
 		if ($id != '')
 			$query  = $query." where id = '".$id."'";

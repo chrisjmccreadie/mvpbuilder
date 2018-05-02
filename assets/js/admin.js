@@ -74,6 +74,7 @@ function addrecorddone()
             $(this).val('');
             
         });
+        $(".wysiwyg").summernote('code', '');
 
         alertMessage(recordAddedSuccess,1,0);
     }
@@ -186,6 +187,8 @@ function deletetablerecord(id)
         });
 }
 
+
+
 /*
     This function handles the add / editing or records.
 
@@ -210,14 +213,20 @@ function processrecord(updatetype)
     {
         //get name 
         var name = $(this).attr("name");
-        //get type
-        var type = $(this).val();
-        if(isNaN(type))
-        {
-            $('#error'+name).text(fieldNumberError);
-            $('#error'+name).addClass('select_error');
-            
-            success = 0;
+        //get the type
+        var type = $(this).attr("type");
+        //get value
+        var value = $(this).val();
+       
+        if (type == 'textfield')
+        {     
+            if(isNaN(value))
+            {
+                $('#error'+name).text(fieldNumberError);
+                $('#error'+name).addClass('select_error');
+                
+                success = 0;
+            }
         }
     });
    
@@ -342,6 +351,20 @@ var elementname = '';
 
 $( document ).ready(function() 
 {
+
+    $('.fieldcheckbox').change(function(){
+        elementname = $(this).attr('data-id');
+        if ($(this).is(':checked')) 
+        {
+            $('#'+elementname).val('1');
+            
+        }
+        else
+        {
+            $('#'+elementname).val('0');
+          
+        }
+    });
 
     //load wysiwyg editor
     $('.wysiwyg').summernote({

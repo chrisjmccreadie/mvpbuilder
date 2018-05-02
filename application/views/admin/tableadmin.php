@@ -58,7 +58,7 @@
 	            		//build some dropdowns arrays to create the meta look up tables
 	            		//note (chris) this does not really belon in the render view move this to the generic class of config at some point
 	            		//int dropdown
-	            		$intselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown","Lookup"=>"lookup");
+	            		$intselect = array("Please Select"=>"","Textfield"=>"textfield","Dropdown"=>"dropdown","Lookup"=>"lookup","Checkbox"=>'checkbox');
 	            		//date dropdown
 	            		$dateselect = array("Date"=>"Date");
 	            		//varchar dropdown
