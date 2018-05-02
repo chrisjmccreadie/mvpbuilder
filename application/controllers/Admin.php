@@ -102,7 +102,8 @@ class Admin extends CI_Controller {
 		foreach ($fields as $field)
 		{
 			//check if we are hiding it
-			if ($field->hideview == 0)
+			//print_r($field);
+			if (($field->hideview == 0) || ($field->name == 'id'))
 			{
 				//build the list
 				if ($fieldlist == '' )

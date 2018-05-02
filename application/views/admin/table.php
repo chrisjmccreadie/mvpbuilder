@@ -47,11 +47,26 @@
 			            		//loop throuh the fields and output
 			            		//print_r($fields);
 			            		//check this against the field list
-
+			            		$hideid = 0;
 			            		foreach ($fields as $field)
 			            		{
-			            			//if ($field->hideview == 0)
+			            			if ($field->name == 'id')
+			            			{
+			            				if ($field->hideview == 0)
+			            				{
+			            					echo " <th>".$field->name."</th>";
+			            					
+			            				}
+			            				else
+			            				{
+			            					$hideid = 1;
+			            				}
+			            			}
+			            			else
+			            			{
 			            				echo " <th>".$field->name."</th>";
+			            			}
+			            			
 			            			
 			            			
 			            		}
@@ -105,7 +120,15 @@
 					            		{
 					            			$value = "<img src='https://process.filestackapi.com/resize=width:50,height:50,fit:scale/".$result->handle."'/>";
 					            		}
-			            					echo "<td>$value</td>";
+					            		if ($key== 'id')
+				            			{
+				            				if ($hideid == 0)
+				            					echo "<td>$value</td>";
+				            			}
+				            			else
+				            			{
+				            				echo "<td>$value</td>";
+				            			}
 			            			}
 			            			echo "<td>";
 			            			if ($this->session->canedit == 1)
