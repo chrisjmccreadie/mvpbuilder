@@ -3,14 +3,10 @@ admin:
   navmenu:
     ☐ create menu items from config and link them to the controller 
     ☐ add s3 class
-    ☐ add settings to config
   memchace:
     ☐ add memcachier class
     ☐ build it in the RunQuery command
     ☐ add a config option
- session code:
-   ☐ clean up session code
-   ☐  set the fields to fetch in login from the exclude table
  table management:
    ☐ add look up engine based on imported data (look_tablename)
    ☐ for varchars set a max length field
@@ -21,7 +17,6 @@ admin:
    ☐ ajax loading of datatables for larger datasets (config item)
    ☐ add inline editing
   misc:
-   ☐ add setup script
   data import class:
    ☐ inport from country.io
 
@@ -37,6 +32,10 @@ www:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ set the fields to fetch in login from the exclude table @done (18-05-02 17:02) @project(admin / session code)
+ ✔ clean up session code @done (18-05-02 17:02) @project(admin / session code)
+ ✔ add setup script @done (18-05-02 17:02) @project(admin / table management / misc)
+ ✔ add settings to config @done (18-05-02 17:02) @project(admin / navmenu)
  ✔ add a nice select (with find etc) @done (18-05-02 16:30) @project(admin / table management / table view / inesert / edit)
  ✔ edit wysiwg bug * @done (18-05-02 16:07) @project(admin / table management / table view / inesert / edit)
  ✔ move filestack to config & hidden var* @done (18-05-02 15:59) @project(admin / table management / misc)
