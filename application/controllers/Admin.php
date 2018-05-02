@@ -80,7 +80,7 @@ class Admin extends CI_Controller {
 	public function table()
 	{
 		//get the table
-		$table = $this->uri->segment(3);
+		$data['table'] = $this->uri->segment(3);
 
 		/*
 
@@ -94,47 +94,45 @@ class Admin extends CI_Controller {
 
 
 		*/
-
-		//set the field list to all fields
-		$fieldlist = '*';
-		$data['fieldlist'] = '';
-		//loop through the show fields array (found in conifg)
-		foreach ($this->config->item('table_show_fields') as $key => $value) 
+		//set fieldlist var
+		$fieldlist = '';
+		//store the fields for processing.
+		$fields = $this->generic_model->getTableModifiers($data['table']);
+		$i=0;
+		foreach ($fields as $field)
 		{
-
-			//check if the table matches the current table
-			if ($key == $table)
+			//check if we are hiding it
+			if ($field->hideview == 0)
 			{
-				//found table implode the array as these are the fields we want
-				$fieldlist = implode($value,",");
-				$data['fieldlist'] = $value;
-			}
-		}
+				//build the list
+				if ($fieldlist == '' )
+					 $fieldlist = $field->name;
+				else
+					$fieldlist = $fieldlist.','.$field->name;
 
-		
+			}
+			else
+			{
+				//remove it
+				unset($fields[$i]);
+			}
+			$i++;
+		}
+		$data['fields'] = $fields;
+		//print_r($data['fields']);
 		//echo $fieldlist;
 		//exit;
 		//build the query
-		$query = "select $fieldlist from `$table` ";
+		$query = "select $fieldlist from `".$data['table']."` ";
 		//echo $query;
 		//get the results
-		$query = $this->generic_model->runQuery($query,$table,1);
+		$query = $this->generic_model->runQuery($query,$data['table'],1);
 		//remove any archived and active fields
 		//print_r( $query->result());
-		
-
-		//store the table name for the view to process
-		$data['table'] = $table;
-		//store the fields for processing.
-		$data['fields'] = $this->generic_model->getTableModifiers($data['table']);
-
-		
 		//store the results for the view to process.
 		$data['result'] = $query->result();
-		
 		//get the assoicated datasets
-		
-		$data['foreigntabledata'] = $this->generic_model->getDataSet($table,$data['fields']);
+		$data['foreigntabledata'] = $this->generic_model->getDataSet($data['table'],$data['fields']);
 		//load the view
 		$this->load->view('admin/table',$data);
 

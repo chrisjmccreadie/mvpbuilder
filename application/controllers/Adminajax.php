@@ -25,21 +25,24 @@ class Adminajax extends CI_Controller {
 		$type = $data['type'];
 		$lookup = $data['lookup'];
 		$required = $data['required'];
+		$hideview = $data['hideview'];
+		$hideedit = $data['hideedit'];		
 		$sql = "select * from `tablemodifier` where `table` = '$table' and `field` = '$field' and active = 1";
 		$result = $this->generic_model->runQuery($sql);
 		//echo $result->num_rows();
 		if ($result->num_rows() == 0)
 		{
 			//insert
-			$sql = "INSERT INTO `tablemodifier` (`table`, `field`,`lookup`, `htmltype`, `active`, `required`) VALUES ( '$table', '$field','$lookup', '$type', '1', '$required')";
+			$sql = "INSERT INTO `tablemodifier` (`table`, `field`,`lookup`, `htmltype`, `active`, `required`,`hideview`,`hideedit`) VALUES ( '$table', '$field','$lookup', '$type', '1', '$required','$hideview','$hideedit')";
 			$res = $this->generic_model->runQuery($sql);
 		}
 		else
 		{
-			$sql = "UPDATE `tablemodifier` SET `table` = '$table', `field`='$field',`lookup`='$lookup',`htmltype`='$type',`required` = '$required' WHERE `table` = '$table' and `field`='$field'";
-			//echo $sql;
+			$sql = "UPDATE `tablemodifier` SET `table` = '$table', `field`='$field',`lookup`='$lookup',`htmltype`='$type',`required` = '$required',`hideview`='$hideview',`hideedit`='$hideedit' WHERE `table` = '$table' and `field`='$field'";
+			
 			$res = $this->generic_model->runQuery($sql);
 		}
+		//echo $sql;
 		$error = $this->db->error();
         if ($error['message'] != '') 
             echo 0;

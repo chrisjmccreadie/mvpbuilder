@@ -50,17 +50,9 @@
 
 			            		foreach ($fields as $field)
 			            		{
-			            			if ($fieldlist == '')
-			            			{
-										echo " <th>".$field->name."</th>";
-			            			}
-			            			else
-			            			{
-			            				if (in_array($field->name, $fieldlist)) 
-			            				{
-										    echo " <th>".$field->name."</th>";
-										}
-			            			}
+			            			//if ($field->hideview == 0)
+			            				echo " <th>".$field->name."</th>";
+			            			
 			            			
 			            		}
 			            	?>
@@ -79,10 +71,10 @@
 
 					            	echo "<tr id='row$item->id'>";
 					            	//loop through each item.
-					            	
+					            	//print_r($item);
 			            			foreach ($item as $key => $value)
 			            			{
-			            				
+
 
 			            				//loop through the foreign data array
 				                		foreach ($foreigntabledata as $item2)
@@ -113,8 +105,7 @@
 					            		{
 					            			$value = "<img src='https://process.filestackapi.com/resize=width:50,height:50,fit:scale/".$result->handle."'/>";
 					            		}
-
-			            				echo "<td>$value</td>";
+			            					echo "<td>$value</td>";
 			            			}
 			            			echo "<td>";
 			            			if ($this->session->canedit == 1)

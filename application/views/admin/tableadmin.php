@@ -183,7 +183,21 @@
 	            							else
 	            								echo "<input  class='requiredcheck' type='checkbox' id='required$item->name' name='required$item->name' value='0' >";
 	            							break;
-	            						default:
+         								case "hideview":
+	            							
+	            							if ($value == 1)
+	            								echo "<input class='requiredcheck' type='checkbox' id='hideview$item->name' name='hideview$item->name' value='$value' checked='checked'>";
+	            							else
+	            								echo "<input  class='requiredcheck' type='checkbox' id='hideview$item->name' name='hideview$item->name' value='0' >";
+	            							break;
+
+         								case "hideedit":
+	            							
+	            							if ($value == 1)
+	            								echo "<input class='requiredcheck' type='checkbox' id='hideedit$item->name' name='hideedit$item->name' value='$value' checked='checked'>";
+	            							else
+	            								echo "<input  class='requiredcheck' type='checkbox' id='hideedit$item->name' name='hideedit$item->name' value='0' >";
+	            							break;		            						default:
 	            							# code...
 	            							break;
 	            					}

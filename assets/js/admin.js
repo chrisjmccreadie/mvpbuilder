@@ -62,7 +62,7 @@ function loginsuccess()
 
 function addrecorddone()
 {
-    console.log(callbackresult);
+    //console.log(callbackresult);
     if (callbackresult == 1)
     {
         //remove the image
@@ -86,7 +86,7 @@ function addrecorddone()
 
 function editrecorddone()
 {
-    console.log(callbackresult);
+    //console.log(callbackresult);
     if (callbackresult == 1)
     {
         alertMessage(recordUpdated,1,0);
@@ -129,7 +129,7 @@ END OF AJAX CALL BACK FUNCTIONS
 */
 function postAjax(url, data,callback) 
 {
-    //console.log(data);
+    console.log(data);
     //return;
     $.ajax({
        type: 'POST',    
@@ -466,12 +466,16 @@ $( document ).ready(function()
         var required = $('#required'+field).val();
         //get the lookup
         var lookup = $('#lookup'+field).val();
+        //get the hideview
+        var hideview = $('#hideview'+field).val();
+        //get the editview
+        var hideedit = $('#hideedit'+field).val();
         //note (chris) this does not work so the code is in line 262 for now
         //var data = "{table:"+table+",lookup:"+lookup+",field:"+field+",type:"+htmltype+",required:"+required+"}";
 
         //build the url
         var url = rootUrl+'/adminajax/updatetablemeta';
-        postAjax(url, {table:table,field:field,type:htmltype,required:required,lookup:lookup},'updatetablemetasuccess()');
+        postAjax(url, {table:table,field:field,type:htmltype,required:required,lookup:lookup,hideview:hideview,hideedit:hideedit},'updatetablemetasuccess()');
 
     });
     
