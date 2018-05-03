@@ -86,7 +86,7 @@ function addrecorddone()
 
 function editrecorddone()
 {
-    console.log(callbackresult);
+    //console.log(callbackresult);
     if (callbackresult == 1)
     {
         alertMessage(recordUpdated,1,0);
@@ -109,7 +109,7 @@ function deleterecorddone()
 
 function updatetablemetasuccess()
 {
-    console.log(callbackresult);
+    //console.log(callbackresult);
     if (callbackresult == 1)
         alertMessage(fieldUpdated,1,0); 
     else 
@@ -129,7 +129,7 @@ END OF AJAX CALL BACK FUNCTIONS
 */
 function postAjax(url, data,callback) 
 {
-    console.log(data);
+    //console.log(data);
     //return;
     $.ajax({
        type: 'POST',    
@@ -365,7 +365,9 @@ $( document ).ready(function()
     $('#admintable').DataTable();
 
     //date and time picker
-    $('.datepicker').datepicker({});
+    var firstOpen = true;
+
+    $('.datepicker').datepicker({"setDate": new Date(),"useCurrent":true})
 
     //this function checks for check box to be ticked
     $('.fieldcheckbox').change(function()

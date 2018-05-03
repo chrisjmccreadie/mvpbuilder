@@ -23,7 +23,7 @@
                     //loop through the fields
                     foreach ($fields as $item)
                     {
-                        
+
                         if (($item->hideedit == 0) || ($item->hideedit == ''))
                         {
                             //print_r($item);
@@ -31,7 +31,11 @@
                             if ($recordresult == '')
                             {
                                 //set the value to false
-                                $item->value = '';
+                                //check if its a date as we have to set to todays date
+                                if ($item->type == 'date')
+                                    $item->value =date("Y/m/d");
+                                else
+                                    $item->value = '';
                             }
                             else
                             {
@@ -41,6 +45,7 @@
                                     //does it match
                                     if ($key == $item->name)
                                     {
+
                                         $item->value = $value;
                                     }
                                 }  

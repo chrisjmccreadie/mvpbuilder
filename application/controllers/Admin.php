@@ -194,6 +194,7 @@ class Admin extends CI_Controller {
 		$result = $result->result();
 		$result = (object) $result[0];
 		$data['recordresult'] = $result;
+		;
 
 		//store the fields
 		$data['fields'] = $this->generic_model->getTableModifiers($table);
