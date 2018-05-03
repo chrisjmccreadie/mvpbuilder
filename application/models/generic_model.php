@@ -362,6 +362,25 @@ class Generic_model extends CI_Model {
 		$field->chooseimage = '';
 		$field->removeimage = '';
 
+		if (isset($field->hideview))
+		{
+			if ($field->hideview == '')
+				$field->hideview =0;
+		}
+		else
+		{
+			$field->hideview =0;
+		}
+		if (isset($field->hideedit))
+		{
+			if ($field->hideview == '')
+				$field->hideedit =0;		
+		}
+		else
+		{
+			$field->hideedit =0;
+		}
+
 		//todo (chris) set this up modifier table
 		$field->maxlength = '';		
 		//check the required field
@@ -463,19 +482,17 @@ class Generic_model extends CI_Model {
 		    		$field->lookupdata = $result->result();
 		    		$field->htmltype ='select';
 		      	 	$template = 'admin/formelements/lookup';
-		       		break;				
+		       		break;	
+		    	case "varchar":	
+		    		//echo "tf";	
+		    		$field->htmltype = 'textfield';    		
+		      	 	$template = 'admin/formelements/textfield';
+		       		break;		       					
 		    	case "textfield":	
 		    		//echo "tf";	
 		    		$field->htmltype = 'textfield';    		
 		      	 	$template = 'admin/formelements/textfield';
 		       		break;
-		    	case "textarea":	
-		    		//echo "tf";	
-		    		$field->htmltype = 'textfield';    		
-		      	 	$template = 'admin/formelements/textarea';
-		       		break;		       		
-
-
 		    	case "date":
 		      	 	$template = 'admin/formelements/date';
 		       		break;	
@@ -509,10 +526,15 @@ class Generic_model extends CI_Model {
 		      	 	
 		       		break;	
 		    	case "text":
-		    		$field->htmltype = 'textfield';
-		      	 	$template = 'admin/formelements/text';
+		    		$field->htmltype = 'textarea';
+		      	 	$template = 'admin/formelements/textarea';
 		       		break;	
-		    	case "wysiwyg":
+		    	case "textarea":	
+		    		//echo "tf";	
+		    		$field->htmltype = 'textfield';    		
+		      	 	$template = 'admin/formelements/textarea';
+		       		break;	
+		       	case "wysiwyg":
 		    		//print_r($field);
 		    		$field->htmltype = 'textfield';
 		      	 	$template = 'admin/formelements/wysiwyg';
@@ -523,6 +545,9 @@ class Generic_model extends CI_Model {
 		       		break;			       				       				       				       			    
 			}
 			//check its not blank, if it is then it is type we do not deal with yet.
+			//print_r($field);
+			//echo $template;
+			//exit;
 			if ($template != '')
 			{
 
