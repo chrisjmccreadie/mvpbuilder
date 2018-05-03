@@ -86,7 +86,7 @@ function addrecorddone()
 
 function editrecorddone()
 {
-    //console.log(callbackresult);
+    console.log(callbackresult);
     if (callbackresult == 1)
     {
         alertMessage(recordUpdated,1,0);
@@ -272,13 +272,14 @@ function processrecord(updatetype)
         var data = $('#addrecordform').serialize(); //  <-----------
         //turn it into a nice JSON object as jSON parse does this very badly
         data = JSON.parse('{"' + decodeURI(data.replace(/&/g, "\",\"").replace(/=/g,"\":\"")) + '"}')
-        console.log(data);
+        //console.log(data);
         //alert('done');
         //return;
         //set the url to call edit or add
         if (updatetype == 'edit')
         {
             var url = rootUrl+'/adminajax/editrecord';
+            console.log(url);
              //call it
             postAjax(url, data,'editrecorddone()');
         }

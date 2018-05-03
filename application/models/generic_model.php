@@ -746,6 +746,8 @@ class Generic_model extends CI_Model {
 					$query = $query." , `$key` = '$value'";
 			}
 		}
+		//echo $id;
+		//exit;
 		if ($id != '')
 			$query  = $query." where id = '".$id."'";
 		return($query);

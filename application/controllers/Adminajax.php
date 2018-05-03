@@ -108,10 +108,12 @@ class Adminajax extends CI_Controller {
 	{
 		//get the post data
 		$data = $this->input->post();
+		//print_r($data);
 		//get the table
 		$table = $this->input->post('table');
 		//get the id
-		$id = $data['id'];
+		$id = $this->input->post('id');
+		//echo $id;
 		//remove it from the vars
 		unset($data['id']);
 		//remove the table from the array
@@ -136,8 +138,9 @@ class Adminajax extends CI_Controller {
 			unset($data[$imagelement]);
 		}
 		//create an update
-		$sql = $this->generic_model->updateFromValueArray($table,$data,0,$id);
-		echo $sql;
+		$sql = $this->generic_model->updateFromValueArray($table,$data,$id);
+		//echo $sql;
+		//exit;
 		//run the query
 		$query = $this->generic_model->runQuery($sql);
 
@@ -150,15 +153,18 @@ class Adminajax extends CI_Controller {
 		}
 		else
 		{
-			//remove the image
-			$sql = "delete from `image`  where `parentid` = '$id' ";
-			//echo $sql;
-			$this->generic_model->runQuery($sql);
-			//todo (chris) remove the pointer to it we have to know the filed 
-			$sql = "update `$table` set `$imagelement` = '' where `id` = '$id'" ;
-			//echo $sql;
-			//exit;
-			$this->generic_model->runQuery($sql);
+			if ($imagelement != '')
+			{
+				//remove the image
+				$sql = "delete from `image`  where `parentid` = '$id' ";
+				//echo $sql;
+				$this->generic_model->runQuery($sql);
+				//todo (chris) remove the pointer to it we have to know the filed 
+				$sql = "update `$table` set `$imagelement` = '' where `id` = '$id'" ;
+				//echo $sql;
+				//exit;
+				$this->generic_model->runQuery($sql);
+			}
 		}
 		
 		//check for sql errors 
